@@ -1,0 +1,42 @@
+[DeviceName]
+Value=P18F6722
+[DeviceClock]
+Value=20
+[MainUnit]
+Value=
+[DeviceFlags]
+Count=14
+Value0=_OSC_HS_1H = $00F2
+Value1=_WDT_OFF_2H = $00FE
+Value2=_WDTPS_32_2H = $00EB
+Value3=_LVP_OFF_4L = $00FB
+Value4=_XINST_OFF_4L = $00BF
+Value5=_CP0_ON_5L = $00FE
+Value6=_CP1_ON_5L = $00FD
+Value7=_CP2_ON_5L = $00FB
+Value8=_CP3_ON_5L = $00F7
+Value9=_CP4_ON_5L = $00EF
+Value10=_CP5_ON_5L = $00DF
+Value11=_CP6_ON_5L = $00BF
+Value12=_CP7_ON_5L = $007F
+Value13=_WRTC_ON_6H = $00DF
+[BuildType]
+bType=0
+[ProjectFiles]
+Count=1
+Value0=Stend.c
+[HeaderFiles]
+Count=0
+[ObjLibFiles]
+Count=0
+[PLDFiles]
+Count=0
+[EEPROMinfo]
+isused=0
+[SearchPath]
+Count=3
+Value0=C:\Program Files\Mikroelektronika\mikroC\Defs\
+Value1=C:\Program Files\Mikroelektronika\mikroC\Uses\p18\
+Value2=D:\Стенд 1.1\
+[IncludePath]
+Count=0
