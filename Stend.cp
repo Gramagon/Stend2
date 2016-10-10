@@ -51,6 +51,7 @@ const char cca_tip27[] = "C¨¬-9-01 ";
 const char cca_tip28[] = "seylka28 ";
 const char cca_tip29[] = "seylka29 ";
 const char cca_tip30[] = "seylka30 ";
+const char cca_tip31[] = "Random ";
 
  char txt_msg[16];
  char txt_msg1[16];
@@ -89,7 +90,7 @@ const char cca_tip30[] = "seylka30 ";
 
 
  unsigned short flag_bit0,flag_bit1,flag_bit2;
-#line 130 "D:/Stend1/Stend.c"
+#line 131 "D:/Stend1/Stend.c"
 void preobraz (float pr){
  FloatToStr(pr,txt_msg);
  if (pr<1E-6){txt_msg[7]=32;txt_msg[6]=32;txt_msg[5]=32;txt_msg[4]=32;txt_msg[3]=32;txt_msg[2]=32;txt_msg[1]=32;txt_msg[0]=48;goto end_preob;}

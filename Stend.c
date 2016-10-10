@@ -73,6 +73,7 @@ const char cca_tip27[]           = "CЁ¬-9-01 ";          // СПШ-9-01
 const char cca_tip28[]           = "seylka28 ";          // резерв
 const char cca_tip29[]           = "seylka29 ";          // резерв
 const char cca_tip30[]           = "seylka30 ";          // резерв
+const char cca_tip31[]           = "Random ";          // резерв
 
   char txt_msg[16];
   char txt_msg1[16];
