@@ -41,7 +41,7 @@ const char cca_prb[]            = "           ";
 const char cca_prbb[]            = "     ";
 const char cca_zb[]            = "Chislo zubiev";     //Ââåäèòå 
 const char cca_zh[]            = "Shirina kolei";     //Ââåäèòå 
-const char cca_dl[]            = "Okrushost kolesa";  //Ââåäèòå 
+const char cca_dl[]            = "Okrushost kol";  //Ââåäèòå 
 
 const char cca_tip1[]            = "A¨¨-3A-00";          //ÀÏÏ-3A-01
 const char cca_tip2[]            = "A¨¨-3A-01";          //ÀÏÏ-3A-02
@@ -81,8 +81,8 @@ const char cca_tip31[]           = "Random ";          // ðåçåðâ
   char txt3[3];
   char txt4[4];
   char txt2[2];
-  unsigned long  imp, frt=1, ch=1, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=1;
-  double float ob=0, dl=0, zh=0, nl=0.1E+0, ga=0;
+  unsigned long  imp, frt=1, ch=0, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=1;
+  double float ob=0, dl=0.1E+0, zh=0, nl=0.1E+0, ga=0;
   char tip;
   unsigned short count_warn,warning;
                  #define   warning_0      warning.F0
@@ -161,11 +161,7 @@ void strcp_c(char *str1, const char *cstr2) {
     str1[i] = cstr2[i];
   } while (str1[i++]);}
 //------------------------------------------------------------------------------
-void bip(void)
-{               PORTE.F1=1;
-                Delay_ms(200);
-                PORTE.F1=0;
-                Delay_ms(200);}
+
                                 
 short keypad (void){
   if (Button(&PORTB, 5, 1, 1)) {old_0 = 1;}
@@ -244,7 +240,7 @@ else{INTCON=0b11000000;}
  TRISA=0xFF;
  TRISB=0xFF;
  TRISC=0b00011111;
- TRISE=0;
+ TRISE=0b00000000;
  TRISF=0b00000000;                                                                                                                                                                                             ;
   PORTE.F0=0;
   PORTE.F1=0;
@@ -263,27 +259,24 @@ else{INTCON=0b11000000;}
    Lcd_Custom_Cmd(Lcd_CURSOR_OFF);
    I2C_Init(20000);
    RCON.F7=1; IPR1.F3=1;
-PIR2.LVDIF = 0;
+   PIR2.LVDIF = 0;
                     
    INTCON=0b11000000;
-   PIE1=0b00000101;
-   PIE2=0b00000001;
-   WDTCON.F0=1;
+   PIE1=0b00000000;
+   PIE2=0b00000000;
+   WDTCON.F0=0;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    page=1; page_save=1;
 start:
-   if(Per_TMR1.F0){if(flag.F0){flag.F0=0;
-                                                             
-             if(ALARM__0==0){if(ALARM__1==0){if(ALARM__2==0){page_save=page; PORTE.F1=0; PORTE.F2=1;}}}
-  }} else{flag.F0=1;}
+
 //------------------------------------------------------------------------------
  switch(page){
       case 1:
               strcp_c(txt_msg, cca_std); LCD_Custom_Out(1,2,txt_msg);
               strcp_c(txt_msg, cca_prv); LCD_Custom_Out(2,2,txt_msg); 
-              PORTE.F1=0;
-              Delay_ms(1000);
               PORTE.F1=1;
+              Delay_ms(200);
+              PORTE.F1=0;
               Lcd_Custom_Cmd(Lcd_Clear);
               page=2;push=0;
         break; //---------------------------------------------------------------
@@ -321,14 +314,17 @@ start:
                 case 28:  strcp_c(txt_msg, cca_tip28);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
                 case 29:  strcp_c(txt_msg, cca_tip29);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
                 case 30:  strcp_c(txt_msg, cca_tip30);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1479; cl=1479; dl=2,198; zh=4; ob=113,74;break;
-                case 30:  strcp_c(txt_msg, cca_tip30);  LCD_Custom_Out(2,6,txt_msg);break;
+                case 31:  strcp_c(txt_msg, cca_tip31);  LCD_Custom_Out(2,6,txt_msg);  break;
                 } 
         keypad();
-              if(kp==3){Typ_izdelia +=1;;push=0;page=2;} if(Typ_izdelia>30){Typ_izdelia=1;}
-              if(kp==4){Typ_izdelia -=1;;push=0;page=2;} if(Typ_izdelia<1){Typ_izdelia=30;}    
-              if(kp==5){ Typ_izdelia ==Typ_izdelia;
-                         Lcd_Custom_Cmd(Lcd_Clear);
-                         if(Typ_izdelia=31){page=5;push=0;}  
+              if(kp==3){Typ_izdelia +=1;push=0;page=2;} if(Typ_izdelia>31){Typ_izdelia=1;}
+              if(kp==4){Typ_izdelia -=1;push=0;page=2;} if(Typ_izdelia<1){Typ_izdelia=31;}    
+              if(kp==5){ if(Typ_izdelia==31){ Lcd_Custom_Cmd(Lcd_Clear);  
+                                              strcp_c(txt_msg, cca_zgr); LCD_Custom_Out(1,5,txt_msg);
+                                              strcp_c(txt_msg, cca_dnh); LCD_Custom_Out(2,6,txt_msg);
+                                              Delay_ms(1000);
+                                              Lcd_Custom_Cmd(Lcd_Clear);page=5;push=0;break;}
+                         Lcd_Custom_Cmd(Lcd_Clear);  
                          strcp_c(txt_msg, cca_zgr); LCD_Custom_Out(1,5,txt_msg);
                          strcp_c(txt_msg, cca_dnh); LCD_Custom_Out(2,6,txt_msg);
                          Delay_ms(1000);
@@ -340,16 +336,17 @@ start:
 
                  strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,14,txt_msg);  
                  strcp_c(txt_msg, cca_Ga); LCD_Custom_Out(2,14,txt_msg);               
-                 if (kp==3){nl+=0.1E+0;imp=imp+cl;frt=frt+1;
+                 if (kp==3){nl+=0.1E+0;push=0;imp=imp+cl;frt=frt+1;
                             strcp_c(txt_msg, cca_prb); LCD_Custom_Out(1,1,txt_msg);
                             strcp_c(txt_msg, cca_prb); LCD_Custom_Out(2,1,txt_msg);}  
-                 if (kp==4){nl-=0.1E+0;imp=imp-cl;frt=frt-1; 
+                 if (kp==4){nl-=0.1E+0;push=0;imp=imp-cl;frt=frt-1; 
                             strcp_c(txt_msg, cca_prb); LCD_Custom_Out(1,1,txt_msg);
                             strcp_c(txt_msg, cca_prb); LCD_Custom_Out(2,1,txt_msg);} 
                             if(nl<0.1E+0){nl=0;imp=0;frt=frt;}
-                 sprintf(txt_msg, "%7u", imp); LCD_Custom_Out(1,1,txt_msg);
+                 LongToStr(imp,txt_msg); LCD_Custom_Out(1,1,txt_msg);           
                  *txt_msg='\0';
                  sprintf(txt_msg, "%3g", nl); LCD_Custom_Out(2,1,txt_msg);
+                 strcp_c(txt_msg, cca_prbb);LCD_Custom_Out(2,5,txt_msg);
                  *txt_msg='\0';
                  if (kp==5){nl==nl;imp==imp;page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
                  if (kp==1){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
@@ -362,9 +359,10 @@ start:
                  if(kp==5){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
                  while (imp>=ch) 
                         {
-                        keypad();
-                        if (push==6){page=2;}
-                        ch=ch++;
+                        kp=keypad();
+                        if (kp==5){kp=0;Delay_ms(20);while(kp!=5){kp=keypad();Delay_ms(10);}}
+                        if (kp==6){break;}
+                        ch=ch++;                        
                         PORTF.F0=0;
                         Delay_ms(9);
                         PORTF.F0=1;
@@ -377,7 +375,8 @@ start:
                         LCD_Custom_Out(2,1,txt_msg);
                         *txt_msg='\0';
                         strcp_c(txt_msg, cca_prbb); LCD_Custom_Out(1,8,txt_msg);
-                        } 
+                        }
+                        stop1: 
                         while (zd<=2)
                                 {
                                 zd=zd++;
@@ -389,45 +388,42 @@ start:
                         PORTF.F0=1; 
                         PORTE.F1=0;                  
         break; //---------------------------------------------------------------
+ metka1:    
         case 5:
-                 strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,1,txt_msg); 
-                 *txt_msg='\0';   
-               keypad();
-              if(kp==3){imp +=1;} 
-              if(kp==4){imp -=1;}
+              strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,1,txt_msg);   
+              keypad();
+              if(kp==3){imp +=10;push=0;} 
+              if(kp==4){imp -=10;push=0;}
               sprintf(txt_msg, "%7u", imp); LCD_Custom_Out(2,1,txt_msg);
               *txt_msg='\0';     
-              if(kp==5){imp ==imp;cl=imp;page=6;push=0;}
+              if(kp==5){imp==imp;cl=imp;page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
         break;
         case 6:
-                 strcp_c(txt_msg, cca_zb); LCD_Custom_Out(1,1,txt_msg); 
-                 *txt_msg='\0';  
-               keypad();
-              if(kp==3){zb +=1;} 
-              if(kp==4){zb -=1;}
+              strcp_c(txt_msg, cca_zb); LCD_Custom_Out(1,1,txt_msg); 
+              keypad();
+              if(kp==3){zb +=1;push=0;} 
+              if(kp==4){zb -=1;push=0;}
               sprintf(txt_msg, "%7u", zb); LCD_Custom_Out(2,1,txt_msg);
               *txt_msg='\0';     
-              if(kp==5){zb ==zb;page=7;push=0;}
+              if(kp==5){zb==zb;page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
         break;
         case 7:
-                 strcp_c(txt_msg, cca_zh); LCD_Custom_Out(1,1,txt_msg); 
-                 *txt_msg='\0';   
-               keypad();
-              if(kp==3){zh +=1;} 
-              if(kp==4){zh -=1;}
-              sprintf(txt_msg, "%7u", zh); LCD_Custom_Out(2,1,txt_msg);
-              *txt_msg='\0';     
-              if(kp==5){zh ==zh;page=8;push=0;}
+              strcp_c(txt_msg, cca_zh); LCD_Custom_Out(1,1,txt_msg);   
+              keypad();
+              if(kp==3){zh +=0.5E+0;push=0;} 
+              if(kp==4){zh -=0.5E+0;push=0;}
+              sprintf(txt_msg, "%3g", zh); LCD_Custom_Out(2,1,txt_msg);
+              *txt_msg='\0';    
+              if(kp==5){zh==zh;page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
         break;
         case 8:
-                 strcp_c(txt_msg, cca_dl); LCD_Custom_Out(1,1,txt_msg); 
-                 *txt_msg='\0';  
+              strcp_c(txt_msg, cca_dl); LCD_Custom_Out(1,1,txt_msg); 
               keypad();
-              if(kp==3){dl +=0.1;} 
-              if(kp==4){dl -=0.1;}
-              sprintf(txt_msg, "%3g", imp); LCD_Custom_Out(2,1,txt_msg);
-              *txt_msg='\0';     
-              if(kp==5){dl ==dl;page=4;push=0;}
+              if(kp==3){dl +=0.1E+0;push=0;} 
+              if(kp==4){dl -=0.1E+0;push=0;}
+              sprintf(txt_msg, "%3g", dl);
+               LCD_Custom_Out(2,1,txt_msg);    
+              if(kp==5){dl==dl;page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
         break;
 }
 kp=keypad();

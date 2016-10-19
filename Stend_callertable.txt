@@ -89,6 +89,10 @@ main
 					RES032
 				Div_8x8_S
 			isdigit
+	LongToStr
+		Div_32x32_S
+			COMFREM
+			SDIV3232L
 	keypad
 		Button
 			Delay_500us
