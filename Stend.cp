@@ -59,7 +59,7 @@ const char cca_tip31[] = "Ruchnoy  ";
  char txt3[3];
  char txt4[4];
  char txt2[2];
- unsigned long imp, frt=1, ch=0, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=1;
+ unsigned long imp, frt=1, ch=1, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=1;
  double float ob=0, dl=0.1E+0, zh=0, nl=0.1E+0, ga=0;
  char tip;
  unsigned short count_warn,warning;
@@ -321,7 +321,7 @@ start:
  strcp_c(txt_msg, cca_imp); LCD_Custom_Out(2,14,txt_msg);
 
  if(kp==5){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
- while (imp>=ch)
+ while (ch<imp)
  {
  kp=keypad();
  if (kp==5){kp=0;Delay_ms(20);while(kp!=5){kp=keypad();Delay_ms(10);}}
