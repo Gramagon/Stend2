@@ -27,7 +27,7 @@ const char cca_pus[]            = "                "; //пусто
 const char cca_tip[]            = "Tёѕ:";             //Тип:
 const char cca_rab[]            = "Pe¶ёј:";           //Режим:
 const char cca_std[]            = "Stend proverki"  ;  //Стенд проверки
-const char cca_prv[]            = "Pultov ACUBv.1" ;  //Пультов ACUB v.1
+const char cca_prv[]            = "Pultov ASCBv.1" ;  //Пультов ACUB v.1
 const char cca_vkl[]            = "BK§ ";             //ВКЛ
 const char cca_vik[]            = "B®K§";             //ВЫКЛ
 const char cca_izd[]            = "B® OP TҐЁA";       //ВЫБОР ТИПА
@@ -73,7 +73,7 @@ const char cca_tip27[]           = "CЁ¬-9-01 ";          // СПШ-9-01
 const char cca_tip28[]           = "seylka28 ";          // резерв
 const char cca_tip29[]           = "seylka29 ";          // резерв
 const char cca_tip30[]           = "seylka30 ";          // резерв
-const char cca_tip31[]           = "Random ";          // резерв
+const char cca_tip31[]           = "Ruchnoy  ";          // резерв
 
   char txt_msg[16];
   char txt_msg1[16];
@@ -274,6 +274,7 @@ start:
       case 1:
               strcp_c(txt_msg, cca_std); LCD_Custom_Out(1,2,txt_msg);
               strcp_c(txt_msg, cca_prv); LCD_Custom_Out(2,2,txt_msg); 
+              Delay_ms(500);
               PORTE.F1=1;
               Delay_ms(200);
               PORTE.F1=0;

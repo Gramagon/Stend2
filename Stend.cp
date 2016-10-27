@@ -5,7 +5,7 @@ const char cca_pus[] = "                ";
 const char cca_tip[] = "T¸¾:";
 const char cca_rab[] = "Pe¶¸¼:";
 const char cca_std[] = "Stend proverki" ;
-const char cca_prv[] = "Pultov ACUBv.1" ;
+const char cca_prv[] = "Pultov ASCBv.1" ;
 const char cca_vkl[] = "BK§ ";
 const char cca_vik[] = "B®K§";
 const char cca_izd[] = "B® OP T¥¨A";
@@ -51,7 +51,7 @@ const char cca_tip27[] = "C¨¬-9-01 ";
 const char cca_tip28[] = "seylka28 ";
 const char cca_tip29[] = "seylka29 ";
 const char cca_tip30[] = "seylka30 ";
-const char cca_tip31[] = "Random ";
+const char cca_tip31[] = "Ruchnoy  ";
 
  char txt_msg[16];
  char txt_msg1[16];
@@ -237,6 +237,7 @@ start:
  case 1:
  strcp_c(txt_msg, cca_std); LCD_Custom_Out(1,2,txt_msg);
  strcp_c(txt_msg, cca_prv); LCD_Custom_Out(2,2,txt_msg);
+ Delay_ms(500);
  PORTE.F1=1;
  Delay_ms(200);
  PORTE.F1=0;
