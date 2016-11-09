@@ -26,22 +26,22 @@ const char cca_ver[]            = "Version  2.03   "; //Âåðñèÿ ïðîãðàììû.
 const char cca_pus[]            = "                "; //ïóñòî
 const char cca_tip[]            = "T¸¾:";             //Òèï:
 const char cca_rab[]            = "Pe¶¸¼:";           //Ðåæèì:
-const char cca_std[]            = "Stend proverki"  ;  //Ñòåíä ïðîâåðêè
-const char cca_prv[]            = "Pultov ASCBv.1" ;  //Ïóëüòîâ ACUB v.1
+const char cca_std[]            = "C¿e½ã ¾po³epº¸ "; //Ñòåíä ïðîâåðêè
+const char cca_prv[]            = "¨y»Ä¿o³ ACK  v.1" ;//Ïóëüòîâ ACUB v.1
 const char cca_vkl[]            = "BK§ ";             //ÂÊË
 const char cca_vik[]            = "B®K§";             //ÂÛÊË
 const char cca_izd[]            = "B® OP T¥¨A";       //ÂÛÁÎÐ ÒÈÏÀ
-const char cca_imp[]            = "imp";              //Ââåäèòå èìïóëüñû
+const char cca_imp[]            = "¥¼¾";              //Ââåäèòå èìïóëüñû
 const char cca_kmh[]            = "º¼/À";             //êì/÷
 const char cca_eeprom[]         = "EEPROM";           //
 const char cca_ga[]             = "¡a ";              //Ãà
 const char cca_zgr[]            = "¤A¡P©¤KA";         //ÇÀÃÐÓÇÊÀ
 const char cca_dnh[]            = "àAHH®X";           //ÄÀÍÍÛÕ
-const char cca_prb[]            = "           ";           
-const char cca_prbb[]            = "     ";
-const char cca_zb[]            = "Chislo zubiev";     //Ââåäèòå 
-const char cca_zh[]            = "Shirina kolei";     //Ââåäèòå 
-const char cca_dl[]            = "Okrushost kol";  //Ââåäèòå 
+const char cca_prb[]            = "           ";      //ïóñòî     
+const char cca_prbb[]            = "     ";           //ïóñòî
+const char cca_zb[]            = "Ko»-³o ·y².";       //Ââåäèòå êîëè÷åñòâî çóáüåâ
+const char cca_zh[]            = "¬¸p. ºo»e¸";        //Ââåäèòå  øèðèíó êîëåè
+const char cca_dl[]            = "Oºp. ºo»ec";        //Ââåäèòå  îêðóæíîñòü êîëåñà
 
 const char cca_tip1[]            = "A¨¨-3A-00";          //ÀÏÏ-3A-01
 const char cca_tip2[]            = "A¨¨-3A-01";          //ÀÏÏ-3A-02
@@ -73,7 +73,7 @@ const char cca_tip27[]           = "C¨¬-9-01 ";          // ÑÏØ-9-01
 const char cca_tip28[]           = "seylka28 ";          // ðåçåðâ
 const char cca_tip29[]           = "seylka29 ";          // ðåçåðâ
 const char cca_tip30[]           = "seylka30 ";          // ðåçåðâ
-const char cca_tip31[]           = "Ruchnoy  ";          // ðåçåðâ
+const char cca_tip31[]           = "PyÀ½o¹   ";           // Ðó÷íîé ââîä
 
   char txt_msg[16];
   char txt_msg1[16];
@@ -81,7 +81,8 @@ const char cca_tip31[]           = "Ruchnoy  ";          // ðåçåðâ
   char txt3[3];
   char txt4[4];
   char txt2[2];
-  unsigned long  imp, frt=1, ch=1, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=1;
+  unsigned long  ttr, imp, frt=1, ch=1, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=0;
+  int nft,  prn;
   double float ob=0, dl=0.1E+0, zh=0, nl=0.1E+0, ga=0;
   char tip;
   unsigned short count_warn,warning;
@@ -315,7 +316,7 @@ start:
                 case 28:  strcp_c(txt_msg, cca_tip28);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
                 case 29:  strcp_c(txt_msg, cca_tip29);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
                 case 30:  strcp_c(txt_msg, cca_tip30);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1479; cl=1479; dl=2,198; zh=4; ob=113,74;break;
-                case 31:  strcp_c(txt_msg, cca_tip31);  LCD_Custom_Out(2,6,txt_msg);  break;
+                case 31:  strcp_c(txt_msg, cca_tip31);  LCD_Custom_Out(2,6,txt_msg);  imp=0; break;
                 } 
         keypad();
               if(kp==3){Typ_izdelia +=1;push=0;page=2;} if(Typ_izdelia>31){Typ_izdelia=1;}
@@ -388,16 +389,22 @@ start:
                         imp=0, ch=1, zb=0, Typ_izdelia=1, nl=0.1;
                         PORTF.F0=1; 
                         PORTE.F1=0;                  
-        break; //---------------------------------------------------------------
- metka1:    
-        case 5:
-              strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,1,txt_msg);   
+        break; //---------------------------------------------------------------    
+        case 5: 
+              prn=1;ttr=imp;   
+              strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,1,txt_msg);
+start12:   
               keypad();
-              if(kp==3){imp +=10;push=0;} 
-              if(kp==4){imp -=10;push=0;}
-              sprintf(txt_msg, "%7u", imp); LCD_Custom_Out(2,1,txt_msg);
-              *txt_msg='\0';     
-              if(kp==5){imp==imp;cl=imp;page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              *txt_msg='\0';
+              if(kp==3){nft +=1;push=0; if(nft>9){nft=0;}} 
+              if(kp==4){nft -=1;push=0; if(nft<0){nft=9;}}
+              sprintf(txt_msg, "%1u", nft); LCD_Custom_Out(2,(6-prn),txt_msg);
+              *txt_msg='\0';
+              if(kp==1){prn--;Lcd_Custom_Cmd(Lcd_Clear);goto start12;}
+              if(kp==2){page=2;push=0;;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}    
+              if(kp==5){imp=imp+ttr+((nft*(pow(10,prn)))/10+1); Lcd_Custom_Cmd(Lcd_Clear);
+              prn++;if(prn>5){prn=1;} goto start12;}   
         break;
         case 6:
               strcp_c(txt_msg, cca_zb); LCD_Custom_Out(1,1,txt_msg); 
