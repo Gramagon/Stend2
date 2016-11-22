@@ -1,12 +1,6 @@
 interrupt
 main
-	Double2Longword
-		SETIOV3224
-	Int2Double
-		NRM3232
-			FIXSIGN32
-			SETFUN32
-			RES032
+	Mul_16x16_S
 	Div_32x32_FP
 		SETFUN32
 		SETFOV32
@@ -41,119 +35,6 @@ main
 			SETFUN32
 	I2C_Init
 	GlobalIniStend
-	pow
-		Mul_32x32_FP
-			SETFUN32
-			SETFOV32
-			RES032
-		Longword2Double
-			NRM4032
-				RES032
-				SETFOV32
-				FIXSIGN32
-				SETFUN32
-		Double2Longword
-			SETIOV3224
-		Compare_Double
-		Equals_Double
-		exp
-			Div_32x32_FP
-				SETFUN32
-				SETFOV32
-				RES032
-				SETFDZ32
-			Sub_32x32_FP
-				Add_32x32_FP
-					SETFOV32
-					NRM4032
-						RES032
-						SETFOV32
-						FIXSIGN32
-						SETFUN32
-			Int2Double
-				NRM3232
-					FIXSIGN32
-					SETFUN32
-					RES032
-			Double2Int
-				SETIOV3224
-			Mul_32x32_FP
-				SETFUN32
-				SETFOV32
-				RES032
-			Compare_Double
-			Equals_Double
-			c_math_eval_poly
-				Add_32x32_FP
-					SETFOV32
-					NRM4032
-						RES032
-						SETFOV32
-						FIXSIGN32
-						SETFUN32
-				Mul_32x32_FP
-					SETFUN32
-					SETFOV32
-					RES032
-			ldexp
-				Compare_Double
-			floor
-				Sub_32x32_FP
-					Add_32x32_FP
-						SETFOV32
-						NRM4032
-							RES032
-							SETFOV32
-							FIXSIGN32
-							SETFUN32
-				Longint2Double
-					NRM4032
-						RES032
-						SETFOV32
-						FIXSIGN32
-						SETFUN32
-				Double2Longint
-					SETIOV3224
-				Compare_Double
-		log
-			Add_32x32_FP
-				SETFOV32
-				NRM4032
-					RES032
-					SETFOV32
-					FIXSIGN32
-					SETFUN32
-			Int2Double
-				NRM3232
-					FIXSIGN32
-					SETFUN32
-					RES032
-			Sub_32x32_FP
-				Add_32x32_FP
-					SETFOV32
-					NRM4032
-						RES032
-						SETFOV32
-						FIXSIGN32
-						SETFUN32
-			Mul_32x32_FP
-				SETFUN32
-				SETFOV32
-				RES032
-			Compare_Double
-			c_math_eval_poly
-				Add_32x32_FP
-					SETFOV32
-					NRM4032
-						RES032
-						SETFOV32
-						FIXSIGN32
-						SETFUN32
-				Mul_32x32_FP
-					SETFUN32
-					SETFOV32
-					RES032
-			frexp
 	sprintf
 		_doprntf
 			Double2Longint
