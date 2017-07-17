@@ -1,11 +1,11 @@
-#line 1 "D:/Stend1/Stend.c"
-#line 13 "D:/Stend1/Stend.c"
+#line 1 "D:/2017/ÒÚÂÌ‰\—ÚÂÌ‰ 1/Stend.c"
+#line 11 "D:/2017/ÒÚÂÌ‰\—ÚÂÌ‰ 1/Stend.c"
 const char cca_ver[] = "Version  2.03   ";
 const char cca_pus[] = "                ";
 const char cca_tip[] = "T∏æ:";
 const char cca_rab[] = "Pe∂∏º:";
 const char cca_std[] = "CøeΩ„ æpo≥ep∫∏ ";
-const char cca_prv[] = "®yªƒøo≥ ACK†v.1";
+const char cca_prv[] = "®yªƒøo≥ ACKBv.1";
 const char cca_vkl[] = "BKß ";
 const char cca_vik[] = "BÆKß";
 const char cca_izd[] = "BÆ†OP T•®A";
@@ -18,9 +18,12 @@ const char cca_dnh[] = "‡AHHÆX";
 const char cca_prb[] = "         ";
 const char cca_prbb[] = "     ";
 const char cca_zb[] = "Koª-≥o ∑y≤.";
-const char cca_zh[] = "¨∏p. ∫oªe∏";
-const char cca_dl[] = "O∫p. ∫oªec";
-
+const char cca_zh[] = "¨∏p. ∑ax≥aøa(M)";
+const char cca_dl[] = "O∫p. ∫oªec(M)";
+const char cca_imp1[] = "¬‚Â‰ËÚÂ ËÏÔÛÎ¸Ò˚:";
+const char cca_skor[] = "Skorost";
+const char cca_Gc[] = "km/ch";
+const char cca_pustota[] = "A®®-3A-00";
 const char cca_tip1[] = "A®®-3A-00";
 const char cca_tip2[] = "A®®-3A-01";
 const char cca_tip3[] = "A®®-3A-02";
@@ -51,7 +54,8 @@ const char cca_tip27[] = "C®¨-9-01 ";
 const char cca_tip28[] = "seylka28 ";
 const char cca_tip29[] = "seylka29 ";
 const char cca_tip30[] = "seylka30 ";
-const char cca_tip31[] = "Py¿Ωoπ   ";
+const char cca_tip31[] = "C3TM-4H";
+const char cca_e70[] = "?ß± §A?P.HA?M?";
 
  char txt_msg[16];
  char txt_msg1[16];
@@ -60,16 +64,21 @@ const char cca_tip31[] = "Py¿Ωoπ   ";
  char txt4[4];
  char txt2[2];
  char txt1[1];
- unsigned long imp, frt=1, ch=1, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=0;
- int rzrd1=0, rzrd2=0, rzrd3=0, rzrd4=0, rzrd5=0;
- double float ob=0, dl=0.1E+0, zh=0, nl=0.1E+0, ga=0;
+ unsigned long Typ_izdelia=0;
+ int i, nomer_seyalki=0, kp;
+ int imp_vent=0;
+ unsigned float preddelitel, preddelitel_ob;
+ unsigned int preddelitel1, preddelitel_ob1;
+ double float impuls=0, impuls2=0, shirina=0,period,skorost=0,period2=0,okruzhnost=0,chastota=0,chastota_ob=0, zubia=0, Ob_vent=0, gektar=0;
+ double float ga_avto=0.1E+0;
  char tip;
+ int sravnenie=0;
  unsigned short count_warn,warning;
-
  unsigned int adres_24C, adres_24C_rd, ch_im ;
- unsigned short page_save, old_alarm_0, old_alarm_1, old_alarm_2, old_alarm_3, ALARM__0, ALARM__1, ALARM__2;
+ unsigned short page_save;
  unsigned short push, old_0, old_1, old_2, old_3, old_4, old_5, old_6, old_7, old_8, jdem, jdem1, jdem2, jdem3;
- unsigned short flag_t, flag_ta, poz_kur=1, kurs;
+ unsigned short flag_t, flag_ta, poz_kur, kurs;
+ unsigned short date, month, day, hours, minutes, seconds, year, prob, n_date, n_month, n_year, n_hours, n_minutes;
 
 
 
@@ -78,21 +87,10 @@ const char cca_tip31[] = "Py¿Ωoπ   ";
 
 
 
- unsigned short temp_Per_CCP, Per_CCP1, Per_CCP2, Per_TMR1, flag, page, page_old, kp, B_visev_1, B_visev_2 ;
+ unsigned short temp_Per_CCP, Per_CCP1, Per_CCP2, Per_TMR1, flag, page, page_old, B_visev_1, B_visev_2 ;
  unsigned int old_CCP1, old_CCP2, temp_CCP, adc_rd;
  unsigned long rez_CCP1, rez_CCP2;
-
-
-
-
-
-
-
-
-
-
- unsigned short flag_bit0,flag_bit1,flag_bit2;
-#line 121 "D:/Stend1/Stend.c"
+#line 121 "D:/2017/ÒÚÂÌ‰\—ÚÂÌ‰ 1/Stend.c"
 void preobraz (float pr){
  FloatToStr(pr,txt_msg);
  if (pr<1E-6){txt_msg[7]=32;txt_msg[6]=32;txt_msg[5]=32;txt_msg[4]=32;txt_msg[3]=32;txt_msg[2]=32;txt_msg[1]=32;txt_msg[0]=48;goto end_preob;}
@@ -125,8 +123,47 @@ void strcp_c(char *str1, const char *cstr2) {
  do {
  str1[i] = cstr2[i];
  } while (str1[i++]);}
-
-
+ typedef struct seialka {
+ char tip[10];
+ float impuls;
+ float zubia;
+ float shirina;
+ float okruzhnost;
+ float skorost;
+ float Ob_vent;
+ int imp_vent;};
+struct seialka arr[31]={{"A®®-3A-00",1820.0,12.0,3.0,2.198, 30.0,3500.0, 2},
+ {"A®®-3A-01",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+ {"A®®-3A-02",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+ {"A®®-3A-03",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+ {"A®®-3A-04",1820.0,12.0,3.0,2.198, 30.0,3500.0, 2},
+ {"A®®-3A-05",1820.0,12.0,3.0,2.198, 30.0,3500.0, 2},
+ {"C®©3-A‡  ",1820.0,12.0,3.0,2.198, 30.0,3500.0, 2},
+ {"C®©-3A-A6",1820.0,12.0,3.0,2.198, 30.0,3500.0, 2},
+ {"C®©-3A-Aß",1820.0,12.0,3.0,2.198, 30.0,3500.0, 2},
+ {"C®©-3A-‡K",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+ {"C®©3A-‡9K",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+ {"C®©3A-A9K",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+ {"A®®-4    ",1357.0,12.0,4.0,2.21056,30.0,3500.0, 2},
+ {"A®®M-4   ",1479.0,13.0,4.0,2.198, 30.0,3500.0, 2},
+ {"C®©-4M‡  ",1357.0,12.0,4.0,2.21056,30.0,3500.0, 2},
+ {"A®®M-6   ",1137.0,15.0,6.0,2.198, 30.0,3500.0, 2},
+ {"A®®6-A†  ",905.0 ,12.0,6.0,2.21056,30.0,3500.0, 2},
+ {"C®©-6    ",905.0 ,12.0,6.0,2.21056,30.0,3500.0, 2},
+ {"C®M-6-06 ",1137.0,15.0,6.0,2.198, 30.0,3500.0, 2},
+ {"C®M-6-07 ",1137.0,15.0,6.0,2.198, 30.0,3500.0, 2},
+ {"C®M-6-12 ",1137.0,15.0,6.0,2.198, 30.0,3500.0, 2},
+ {"C®M-6-16 ",1137.0,15.0,6.0,2.198, 30.0,3500.0, 2},
+ {"C-6T     ",521.0 ,8.0 ,8.4,2.5591, 30.0,3500.0, 2},
+ {"CK®12-K© ",694.0 ,13.0,9.0,2.2294, 30.0,3500.0, 2},
+ {"C®¨-9-00 ",657.0 ,13.0,6.0,2.198, 30.0,3500.0, 2},
+ {"C®ß-6    ",1624.0,13.0,9.0,1.3345, 30.0,3500.0, 2},
+ {"C®¨-9-01 ",657.0 ,13.0,9.0,2.198, 30.0,3500.0, 6},
+ {"seylka28 ",657.0 ,13.0,6.0,2.198, 30.0,3500.0, 2},
+ {"seylka29 ",1137.0,15.0,3.0,2.198, 30.0,3500.0, 2},
+ {"seylka30 ",1479.0,13.0,4.0,2.198, 30.0,3500.0, 2},
+ {"C3TM-4H  ",1750.0,14.0,4.0,2.000, 30.0,3500.0, 2}
+ };
 
 short keypad (void){
  if (Button(&PORTB, 5, 1, 1)) {old_0 = 1;}
@@ -149,7 +186,8 @@ short keypad (void){
  if (old_4 && Button(&PORTB, 2, 1, 0)) {
  push=5;
  old_4 = 0; }
- if (Button(&PORTB, 0, 1, 1)) {old_5 = 1;}
+ if (Button(&PORTB, 0, 1, 1)) {old_5 =
+ 1;}
  if (old_5 && Button(&PORTB, 0, 1, 0)) {
  push=6;
  old_5 = 0; }
@@ -158,82 +196,115 @@ short keypad (void){
 void stop (void){
 stop:
 if(PORTB.F0==0){INTCON=0b00000000; goto stop;}
-else{INTCON=0b11000000;}
+else{INTCON=0b11100000;}
+}
+void DS1307_GetTime(void){
+ I2C_Start();
+ I2C_Wr(0xD0);
+ I2C_Wr(0);
+ I2C_Repeated_Start();
+ I2C_Wr(0xD1);
+ seconds = Bcd2Dec(I2C_Rd(1));
+ minutes = Bcd2Dec(I2C_Rd(1));
+ hours = Bcd2Dec(I2C_Rd(1));
+ day = Bcd2Dec(I2C_Rd(1));
+ date = Bcd2Dec(I2C_Rd(1));
+ month = Bcd2Dec(I2C_Rd(1));
+ year = Bcd2Dec(I2C_Rd(0));
+ I2C_stop();
+}
+void ds1307_init(void){
+ int seconds=0;
+ seconds = (seconds & 0x7F);
+ Delay_ms(50);
+ I2C_Start();
+ I2C_Wr(0xD0);
+ I2C_Wr(0x00);
+ I2C_Wr(Dec2Bcd(seconds));
+ I2C_Stop();
+}
+void ds1307_set_date_time(void){
+ seconds =(seconds & 0x7F);
+ hours =(hours & 0x3F);
+ I2C_Start();
+ I2C_Wr(0xD0);
+ I2C_Wr(0x00);
+ I2C_Wr(Dec2Bcd(seconds));
+ I2C_Wr(Dec2Bcd(n_minutes));
+ I2C_Wr(Dec2Bcd(n_hours));
+ I2C_Wr(Dec2Bcd(day));
+ I2C_Wr(Dec2Bcd(n_date));
+ I2C_Wr(Dec2Bcd(n_month));
+ I2C_Wr(Dec2Bcd(n_year));
+ I2C_Wr(0x80);
+ I2C_Stop();
+}
+void DS1307_GetTime_hm(void){
+ I2C_Start();
+ I2C_Wr(0xD0);
+ I2C_Wr(0x01);
+ I2C_Repeated_Start();
+ I2C_Wr(0xD1);
+ minutes = Bcd2Dec(I2C_Rd(1));
+ hours = Bcd2Dec(I2C_Rd(0));
+ I2C_stop();
 }
 
  void interrupt(){
+ if(INTCON.TMR0IF) {
+ sravnenie++;
+ TMR0H = (preddelitel1>>8)& 0xFF;
+ TMR0L = preddelitel1 & 0xFF;
+ if(impuls2>=sravnenie){LATF.F0=~LATF.F0;}
+ else INTCON=0b00000000;
+ INTCON.TMR0IF=0;
+ asm { CLRWDT }}
  if(PIR1.TMR1IF) {
+ TMR1H = (preddelitel_ob1>>8)& 0xFF;
+ TMR1L = preddelitel_ob1 & 0xFF;;
+ LATF.F1=~LATF.F1;
  PIR1.TMR1IF=0;
- Per_TMR1++;
- Per_CCP1++;
- Per_CCP2++;
- if(Per_CCP1>=3){rez_CCP1=100000;}
- if(Per_CCP2>=4){rez_CCP2=300000;}
- asm { CLRWDT }
- }
- if(PIR1.CCP1IF) {
- PIR1.CCP1IF=0;
- temp_Per_CCP=Per_CCP1;
- Per_CCP1=0;
- temp_CCP=CCPR1H; temp_CCP<<=8; temp_CCP+=CCPR1L;
- if(temp_Per_CCP==0){rez_CCP1=temp_CCP-old_CCP1;}
- if(temp_Per_CCP==1){rez_CCP1=0xFFFF-old_CCP1; rez_CCP1+=temp_CCP;}
- if(temp_Per_CCP==2){rez_CCP1=0xFFFF-old_CCP1; rez_CCP1+=0xFFFF; rez_CCP1+=temp_CCP; }
- old_CCP1=temp_CCP;
- }
- if(PIR2.CCP2IF) {
- PIR2.CCP2IF=0;
- temp_Per_CCP=Per_CCP2;
- Per_CCP2=0;
- temp_CCP=CCPR2H; temp_CCP<<=8; temp_CCP+=CCPR2L;
- if(temp_Per_CCP==0){rez_CCP2=temp_CCP-old_CCP2;}
- if(temp_Per_CCP==1){rez_CCP2=0xFFFF-old_CCP2; rez_CCP2+=temp_CCP;}
- if(temp_Per_CCP==2){rez_CCP2=0xFFFF-old_CCP2; rez_CCP2+=0xFFFF; rez_CCP2+=temp_CCP; }
- if(temp_Per_CCP==3){rez_CCP2=0xFFFF-old_CCP2; rez_CCP2+=0x1FFFE; rez_CCP2+=temp_CCP; }
- old_CCP2=temp_CCP;
  }
  }
  void main()
  {
- imp=0;
  LVDCON=0b00011101;
  Delay_ms(500);
-
  MEMCON.EBDIS = 1;
- ADCON1=0x0E;
+ ADCON1=0x00001111;
  ADCON2=0xBA;
  TRISA=0xFF;
  TRISB=0xFF;
- TRISC=0b00011111;
- TRISE=0b00000000;
- TRISF=0b00000000;
+ TRISC=0b00011010;
+ TRISE=0b0;
+ TRISF=0b11111100;
  PORTE.F0=0;
  PORTE.F1=0;
- PORTE.F2=1;
- ALARM__0=0; ALARM__1=0; ALARM__2=0;
- INTCON=0b00000000;
- PIE1=0; PIE2=0;
- PIR1=0; PIR2=0;
+ PORTE.F2=0;
+
+ PIR2=0;
  CCP1CON=0; CCP2CON=0;
  CCP3CON=23;
  CCP1CON=0b00000101;
  CCP2CON=0b00000101;
- T1CON=0b00110001;
-
+ T0CON=0b10000100;
+ T1CON=0b10101101;
+ T2CON=0b01100010;
+ T3CON=0b01100010;
+ T4CON=0b01100010;
  Lcd_Custom_Config(&PORTD,2,3,4,5,&PORTD,7,1,6);
  Lcd_Custom_Cmd(Lcd_CURSOR_OFF);
  I2C_Init(20000);
  RCON.F7=1; IPR1.F3=1;
  PIR2.LVDIF = 0;
-
- INTCON=0b11000000;
+ INTCON=0b00000000;
  PIE1=0b00000000;
  PIE2=0b00000000;
+ PIR1=0b00000000;
  WDTCON.F0=0;
 
  page=1; page_save=1;
 start:
-
 
  switch(page){
  case 1:
@@ -247,182 +318,344 @@ start:
  page=2;push=0;
  break;
  case 2:
- strcp_c(txt_msg, cca_izd); LCD_Custom_Out(1,4,txt_msg);
- strcp_c(txt_msg, cca_tip); LCD_Custom_Out(2,1,txt_msg);
- switch(Typ_izdelia){
- case 1: strcp_c(txt_msg, cca_tip1); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 2: strcp_c(txt_msg, cca_tip2); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791; break;
- case 3: strcp_c(txt_msg, cca_tip3); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791;break;
- case 4: strcp_c(txt_msg, cca_tip4); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791;break;
- case 5: strcp_c(txt_msg, cca_tip5); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 6: strcp_c(txt_msg, cca_tip6); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 7: strcp_c(txt_msg, cca_tip7); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 8: strcp_c(txt_msg, cca_tip8); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 9: strcp_c(txt_msg, cca_tip9); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 10: strcp_c(txt_msg, cca_tip10); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
- case 11: strcp_c(txt_msg, cca_tip11); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791;break;
- case 12: strcp_c(txt_msg, cca_tip12); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791; break;
- case 13: strcp_c(txt_msg, cca_tip13); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1357; cl=1357; dl=2,21056; zh=4; ob=113,1;break;
- case 14: strcp_c(txt_msg, cca_tip14); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1479; cl=1479; dl=2,198; zh=4; ob=113,74;break;
- case 15: strcp_c(txt_msg, cca_tip15); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1357; cl=1357; dl=2,21056; zh=4; ob=113,1;break;
- case 16: strcp_c(txt_msg, cca_tip16); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
- case 17: strcp_c(txt_msg, cca_tip17); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=905; cl=905; dl=2,21056; zh=6; ob=75,3957;break;
- case 18: strcp_c(txt_msg, cca_tip18); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=905; cl=905; dl=2,198; zh=6; ob=75,3957;break;
- case 19: strcp_c(txt_msg, cca_tip19); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,21056; zh=6; ob=75,8265;break;
- case 20: strcp_c(txt_msg, cca_tip20); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,21056; zh=6; ob=75,8265;break;
- case 21: strcp_c(txt_msg, cca_tip21); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
- case 22: strcp_c(txt_msg, cca_tip22); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
- case 23: strcp_c(txt_msg, cca_tip23); LCD_Custom_Out(2,6,txt_msg); zb=8; imp=521; cl=521; dl=2,5591; zh=6; ob=65,1271;break;
- case 24: strcp_c(txt_msg, cca_tip24); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=694; cl=694; dl=2,2294; zh=8,4; ob=53,3989;break;
- case 25: strcp_c(txt_msg, cca_tip25); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
- case 26: strcp_c(txt_msg, cca_tip26); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1624; cl=1624; dl=1,3345; zh=6; ob=124,891;break;
- case 27: strcp_c(txt_msg, cca_tip27); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
- case 28: strcp_c(txt_msg, cca_tip28); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
- case 29: strcp_c(txt_msg, cca_tip29); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
- case 30: strcp_c(txt_msg, cca_tip30); LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1479; cl=1479; dl=2,198; zh=4; ob=113,74;break;
- case 31: strcp_c(txt_msg, cca_tip31); LCD_Custom_Out(2,6,txt_msg); imp=0; break;
- }
- keypad();
- if(kp==3){Typ_izdelia +=1;push=0;page=2;} if(Typ_izdelia>31){Typ_izdelia=1;}
- if(kp==4){Typ_izdelia -=1;push=0;page=2;} if(Typ_izdelia<1){Typ_izdelia=31;}
- if(kp==5){ if(Typ_izdelia==31){ Lcd_Custom_Cmd(Lcd_Clear);
- strcp_c(txt_msg, cca_zgr); LCD_Custom_Out(1,5,txt_msg);
- strcp_c(txt_msg, cca_dnh); LCD_Custom_Out(2,6,txt_msg);
- Delay_ms(1000);
- Lcd_Custom_Cmd(Lcd_Clear);page=5;push=0;break;}
- Lcd_Custom_Cmd(Lcd_Clear);
- strcp_c(txt_msg, cca_zgr); LCD_Custom_Out(1,5,txt_msg);
- strcp_c(txt_msg, cca_dnh); LCD_Custom_Out(2,6,txt_msg);
- Delay_ms(1000);
- Lcd_Custom_Cmd(Lcd_Clear);
- page=3;
- push=0;}
+ ShortToStr(hours,txt4);
+ Lcd_Custom_Chr(1,12,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+ ShortToStr(minutes,txt4); if(txt4[2]==32){txt4[2]=48;}
+ Lcd_Custom_Chr(1,15,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+ ShortToStr(date,txt4);
+ Lcd_Custom_Chr(2,5,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+ ShortToStr(month,txt4);
+ Lcd_Custom_Chr(2,7,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+ ShortToStr(year,txt4);
+ Lcd_Custom_Chr(2,9,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+ if(kp==1){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==2){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){page=23;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
  break;
  case 3:
- strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,14,txt_msg);
- strcp_c(txt_msg, cca_Ga); LCD_Custom_Out(2,14,txt_msg);
- if (kp==3){nl+=0.1E+0;push=0;imp=imp+cl;frt=frt+1;
- strcp_c(txt_msg, cca_prb); LCD_Custom_Out(1,1,txt_msg);
- strcp_c(txt_msg, cca_prb); LCD_Custom_Out(2,1,txt_msg);}
- if (kp==4){nl-=0.1E+0;push=0;imp=imp-cl;frt=frt-1;
- strcp_c(txt_msg, cca_prb); LCD_Custom_Out(1,1,txt_msg);
- strcp_c(txt_msg, cca_prb); LCD_Custom_Out(2,1,txt_msg);}
- if(nl<0.1E+0){nl=0;imp=0;frt=frt;}
- LongToStr(imp,txt_msg); LCD_Custom_Out(1,1,txt_msg);
- *txt_msg='\0';
- sprintf(txt_msg, "%3g", nl); LCD_Custom_Out(2,1,txt_msg);
- strcp_c(txt_msg, cca_prbb);LCD_Custom_Out(2,5,txt_msg);
- *txt_msg='\0';
- if (kp==5){nl==nl;imp==imp;page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- if (kp==1){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
- if (kp==2){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
+ strcp_c(txt_msg, "Pe∂∏º:" ); LCD_Custom_Out(1,1,txt_msg);
+ strcp_c(txt_msg, "<-A≥øo.Py¿Ωoπ->" ); LCD_Custom_Out(2,1,txt_msg);
+ if(kp==1){page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==2){page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==3){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
  break;
  case 4:
- strcp_c(txt_msg, cca_Ga); LCD_Custom_Out(1,14,txt_msg);
- strcp_c(txt_msg, cca_imp); LCD_Custom_Out(2,14,txt_msg);
- if(kp==5){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
- while (ch<imp)
- {
- kp=keypad();
- if (kp==5){kp=0;Delay_ms(20);while(kp!=5){kp=keypad();Delay_ms(10);}}
- if (kp==6){break;}
- ch=ch++;
- PORTF.F0=0;
- Delay_ms(9);
- PORTF.F0=1;
- Delay_ms(1);
- ga=((ch/zb)*dl*zh)/10000+0.01*frt;
- sprintf(txt_msg, "%3g", ga);
- LCD_Custom_Out(1,1,txt_msg);
- *txt_msg='\0';
- sprintf(txt_msg, "%5d", ch);
- LCD_Custom_Out(2,1,txt_msg);
- *txt_msg='\0';
- strcp_c(txt_msg, cca_prbb); LCD_Custom_Out(1,8,txt_msg);
- }
- stop1:
- while (zd<=2)
- {
- zd=zd++;
- PORTE.F1=1;
- Delay_ms(200);
- PORTE.F1=0;
- Delay_ms(200);}
- imp=0, ch=1, zb=0, Typ_izdelia=1, nl=0.1;
- PORTF.F0=1;
- PORTE.F1=0;
+ strcp_c(txt_msg, "BÆ†OP T•®A" ); LCD_Custom_Out(1,3,txt_msg);
+ LCD_Custom_Out(2,1,arr[nomer_seyalki]. tip);
+ if(kp==1){nomer_seyalki++;push=0;if(nomer_seyalki>30){nomer_seyalki=0;}}
+ if(kp==2){nomer_seyalki--;push=0;if(nomer_seyalki<0){nomer_seyalki=30;}}
+ if(kp==3){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=13;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){
+ impuls=arr[nomer_seyalki].impuls;
+ impuls2=impuls*2+80;
+ zubia=arr[nomer_seyalki].zubia;
+ shirina=arr[nomer_seyalki].shirina;
+ okruzhnost=arr[nomer_seyalki].okruzhnost;
+ skorost=arr[nomer_seyalki].skorost;
+ Ob_vent=arr[nomer_seyalki].Ob_vent;
+ imp_vent=arr[nomer_seyalki].imp_vent;
+ chastota=(skorost*1000/3600/okruzhnost*zubia);
+ preddelitel=65539-((1/chastota)*2500000)/32;
+ preddelitel1=(unsigned int) preddelitel;
+ chastota_ob=(Ob_vent/60)*imp_vent;
+ preddelitel_ob=65550-((1/chastota_ob)*2500000)/4;
+ preddelitel_ob1=(unsigned int)preddelitel_ob;
+ INTCON=0b11100000;
+ PIE1=0b00000001;
+ Lcd_Custom_Cmd(Lcd_Clear);}
  break;
  case 5:
- keypad(); imp=0;
- strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,1,txt_msg);
- Lcd_Custom_Cmd(LCD_UNDERLINE_ON);
- if(kp==3){if(poz_kur<=5){poz_kur++;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_RIGHT);push=0;}}
- if(kp==4){if(poz_kur>0){poz_kur--;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT); push=0;}}
- if(kp==1){switch(poz_kur){
- case 1:
- if (rzrd5<=9){rzrd5++;push=0;if(rzrd5>9){rzrd5=0;}sprintf(txt1,"%u", rzrd5);LCD_Custom_Out(1,5,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 2:
- if (rzrd4<=9){rzrd4++;push=0;if(rzrd4>9){rzrd4=0;}sprintf(txt1,"%u", rzrd4);LCD_Custom_Out(1,6,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 3:
- if (rzrd3<=9){rzrd3++;push=0;if(rzrd3>9){rzrd3=0;}sprintf(txt1,"%u", rzrd3);LCD_Custom_Out(1,7,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 4:
- if (rzrd2<=9){rzrd2++;push=0;if(rzrd2>9){rzrd2=0;}sprintf(txt1,"%u", rzrd2);LCD_Custom_Out(1,8,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 5:
- if (rzrd1<=9){rzrd1++;push=0;if(rzrd1>9){rzrd1=0;}sprintf(txt1, "%u" , rzrd1);LCD_Custom_Out(1,9,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- push=0;}}
- if(kp==2){switch(poz_kur){
- case 1:
- if (rzrd5>=0){rzrd5--;push=0;if(rzrd5<0){rzrd5=9;}sprintf(txt1,"%u", rzrd5);LCD_Custom_Out(1,5,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 2:
- if (rzrd4>=0){rzrd4--;push=0;if(rzrd4<0){rzrd4=9;}sprintf(txt1,"%u", rzrd4);LCD_Custom_Out(1,6,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 3:
- if (rzrd3>=0){rzrd3--;push=0;if(rzrd3<0){rzrd3=9;}sprintf(txt1,"%u", rzrd3);LCD_Custom_Out(1,7,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 4:
- if (rzrd2>=0){rzrd2--;push=0;if(rzrd2<0){rzrd2=9;}sprintf(txt1,"%u", rzrd2);LCD_Custom_Out(1,8,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- case 5:
- if (rzrd1>=0){rzrd1--;push=0;if(rzrd1<0){rzrd1=9;}sprintf(txt1,"%u", rzrd1);LCD_Custom_Out(1,9,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
- break;
- push=0;}}
- if(kp==5){imp=10000*rzrd5+1000*rzrd4+100*rzrd3+10*rzrd2+rzrd1;Lcd_Custom_Cmd(Lcd_Clear);page=6;push=0;}
+ strcp_c(txt_msg, "®apaº. ce«ª∫∏" ); LCD_Custom_Out(1,1,txt_msg);
+ if(kp==3){page=12;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=4; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){page=6; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
  break;
  case 6:
- strcp_c(txt_msg, cca_zb); LCD_Custom_Out(1,1,txt_msg);
- keypad();
- if(kp==3){zb +=1;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- if(kp==4){zb -=1;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- sprintf(txt_msg, "%7u", zb); LCD_Custom_Out(2,1,txt_msg);
- *txt_msg='\0';
- if(kp==5){zb==zb;page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ strcp_c(txt_msg, "Koª-≥o ∏ºæ."); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%5.0f", impuls);LCD_Custom_Out(2,1,txt_msg);
+ if(kp==3){page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=11;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
  break;
  case 7:
- strcp_c(txt_msg, cca_zh); LCD_Custom_Out(1,1,txt_msg);
- strcp_c(txt_msg,cca_prb); LCD_Custom_Out(2,4,txt_msg);
- keypad();
- if(kp==3){zh +=0.5E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- if(kp==4){zh -=0.5E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- sprintf(txt_msg, "%3g", zh); LCD_Custom_Out(2,1,txt_msg);
- *txt_msg='\0';
- if(kp==5){zh==zh;page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ strcp_c(txt_msg, "Koª-≥o ∑y≤ƒe≥"); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2.0f", zubia); LCD_Custom_Out(2,1,txt_msg);
+ if(kp==3){page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
  break;
  case 8:
- strcp_c(txt_msg, cca_dl); LCD_Custom_Out(1,1,txt_msg);
- keypad();
- if(kp==3){dl +=0.1E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- if(kp==4){dl -=0.1E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
- strcp_c(txt_msg,cca_prb); LCD_Custom_Out(2,4,txt_msg);
- sprintf(txt_msg, "%3g", dl);LCD_Custom_Out(2,1,txt_msg);
- if(kp==5){dl==dl;page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ strcp_c(txt_msg, "¨∏p∏Ωa ∑ax≥aøa"); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%1.1f", shirina);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+ if(kp==3){page=9;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
  break;
-}
+ case 9:
+ strcp_c(txt_msg, "O∫py∂Ω. ∫oªeca" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%1.2f", okruzhnost);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+ if(kp==3){page=10;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ break;
+ case 10:
+ strcp_c(txt_msg, "C∫opocøƒ" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2.0f", skorost);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "Kº/¿" ); LCD_Custom_Out(2,5,txt_msg);
+ if(kp==3){page=11;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=9;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ break;
+ case 11:
+ strcp_c(txt_msg, "O≤op. ≥eΩø∏ª.1" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%5.0f", Ob_vent);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "O≤/º∏Ω" ); LCD_Custom_Out(2,10,txt_msg);
+ if(kp==3){page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=10;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ break;
+ case 12:
+ strcp_c(txt_msg, "0.1" ); LCD_Custom_Out(1,1,txt_msg);
+ strcp_c(txt_msg, "°a" ); LCD_Custom_Out(1,5,txt_msg);
+ sprintf(txt_msg, "%2.0f", skorost);LCD_Custom_Out(1,8,txt_msg);;
+ strcp_c(txt_msg, "Kº/¿" ); LCD_Custom_Out(1,11,txt_msg);
+ sprintf(txt_msg, "%5.0f", impuls);LCD_Custom_Out(2,7,txt_msg);;
+ strcp_c(txt_msg, "•ºæ" ); LCD_Custom_Out(2,12,txt_msg);
+ if(kp==3){page=13;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ break;
+ case 13:
+ strcp_c(txt_msg, "O≤op. ≥eΩø∏ª.1" );LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%5.0f", Ob_vent);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "O≤/º∏Ω" ); LCD_Custom_Out(2,10,txt_msg);
+ if(kp==3){page=4; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=12;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ break;
+
+
+
+ case 14:
+ sprintf(txt_msg, "%2.1f", gektar);LCD_Custom_Out(1,1,txt_msg);
+ strcp_c(txt_msg, "°a"); LCD_Custom_Out(1,5,txt_msg);
+ sprintf(txt_msg, "%2.1f", skorost);LCD_Custom_Out(1,7,txt_msg);
+ strcp_c(txt_msg, "Kº/¿"); LCD_Custom_Out(1,11,txt_msg);
+ sprintf(txt_msg, "%5.0f", impuls);LCD_Custom_Out(2,1,txt_msg);;
+ strcp_c(txt_msg, "•ºæ."); LCD_Custom_Out(2,6,txt_msg);
+ if(kp==2){page=15;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==3){page=22;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=22;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){
+ impuls=(gektar*10000*zubia)/(shirina*okruzhnost);
+ impuls2=2*impuls+80;
+ chastota=(skorost*1000/3600/okruzhnost*zubia);
+ preddelitel=65539-((1/chastota)*2500000)/32;
+ preddelitel1=(unsigned int) preddelitel;
+ chastota_ob=(Ob_vent/60)*imp_vent;
+ preddelitel_ob=65550-((1/chastota_ob)*2500000)/4;
+ preddelitel_ob1=(unsigned int)preddelitel_ob;
+ INTCON=0b11100000;
+ PIE1=0b00000001;
+ }
+ break;
+ case 15:
+ strcp_c(txt_msg, "¨∏p∏Ωa ∑ax≥aøa" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2.1f", shirina);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+ if(kp==1){shirina=shirina+0.2;push=0;if(shirina>20.0){shirina=0;}}
+ if(kp==2){shirina=shirina-0.2;push=0;if(shirina<0){shirina=20.0;}}
+ if(kp==3){page=16;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=21;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){shirina==shirina;push=0;}
+ break;
+ case 16:
+ strcp_c(txt_msg, "Koª-≥o ∑y≤ƒe≥" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2.0f", zubia); LCD_Custom_Out(2,1,txt_msg);
+ if(kp==1){zubia=zubia+1.0;push=0;if(zubia>20.0){zubia=0;}}
+ if(kp==2){zubia=zubia-1.0;push=0;if(zubia<0){zubia=20.0;}}
+ if(kp==3){page=17;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=15;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){zubia==zubia;push=0;}
+ break;
+ case 17:
+ strcp_c(txt_msg, "O∫py∂Ω. ∫oªeca" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%1.1f", okruzhnost);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+ if(kp==1){okruzhnost=okruzhnost+0.1;push=0;if(okruzhnost>3.5){okruzhnost=0;}}
+ if(kp==2){okruzhnost=okruzhnost-0.1;push=0;if(okruzhnost<0){okruzhnost=3.5;}}
+ if(kp==3){page=18;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=16;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){okruzhnost==okruzhnost;push=0;}
+ break;
+ case 18:
+ strcp_c(txt_msg, "C∫opocøƒ" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2.1f", skorost);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "Kº/¿" ); LCD_Custom_Out(2,5,txt_msg);
+ if(kp==1){skorost=skorost+0.1;push=0;if(skorost>100.0){skorost=0;}}
+ if(kp==2){skorost=skorost-0.1;push=0;if(skorost<0){skorost=100.0;}}
+ if(kp==3){page=19;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=17;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){skorost==skorost;push=0;}
+ break;
+ case 19:
+ strcp_c(txt_msg, "O≤op. ≥eΩø∏ª.1" );LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%5.0f", Ob_vent);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "O≤/º∏Ω" ); LCD_Custom_Out(2,10,txt_msg);
+ if(kp==1){Ob_vent=Ob_vent+100.0;push=0;if(Ob_vent>6000.0){Ob_vent=0;}}
+ if(kp==2){Ob_vent=Ob_vent-100.0;push=0;if(Ob_vent<0){Ob_vent=6000.0;}}
+ if(kp==3){page=20;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=18;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){Ob_vent==Ob_vent;push=0;}
+ break;
+ case 20:
+ strcp_c(txt_msg, "•ºæ. ≥eΩø∏ª.1" );LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2d", imp_vent);LCD_Custom_Out(2,1,txt_msg);
+ if(kp==1){imp_vent=imp_vent+1;push=0;if(imp_vent>10){imp_vent=0;}}
+ if(kp==2){imp_vent=imp_vent-1;push=0;if(imp_vent<0){imp_vent=10;}}
+ if(kp==3){page=21;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=19;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){imp_vent==imp_vent;push=0;}
+ break;
+ case 21:
+ strcp_c(txt_msg, "Koª-≥o ¥e∫øapo≥" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%3.1f", gektar);LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "°a" ); LCD_Custom_Out(2,10,txt_msg);
+ if(kp==1){gektar=gektar+0.1;push=0;if(gektar>100.0){gektar=0;}}
+ if(kp==2){gektar=gektar-0.1;push=0;if(gektar<0){gektar=100.0;}}
+ if(kp==3){page=15;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=20;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==5){gektar==gektar;push=0;}
+ break;
+ case 22:
+ strcp_c(txt_msg, "O≤op. ≥eΩø∏ª.1" ); LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%5.0f", Ob_vent); LCD_Custom_Out(2,1,txt_msg);
+ strcp_c(txt_msg, "O≤/º∏Ω" ); LCD_Custom_Out(2,10,txt_msg);
+ if(kp==3){page=14; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==4){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ break;
+ case 23:
+ if( kurs.F5 ==0){  kurs.F5 =1;
+ strcp_c(txt_msg, cca_e70); LCD_Custom_Out(2,1,txt_msg);
+ LCD_Custom_Chr(2,16,252);
+ Lcd_Custom_Out(1, 3, ".");
+ Lcd_Custom_Out(1, 6, "."); Lcd_Custom_Chr_Cp('2'); Lcd_Custom_Chr_Cp('0');
+ Lcd_Custom_Out(1, 14, ":"); }
+ if( kurs.F0 ==0){  kurs.F0 =1;
+ ShortToStr(n_date,txt4);
+ Lcd_Custom_Chr(1, 1, txt4[2]);
+ Lcd_Custom_Chr_Cp(txt4[3]);
+ Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+ if( kurs.F1 ==0){  kurs.F1 =1;
+ ShortToStr(n_month,txt4); if(txt4[2]==32){txt4[2]=48;}
+ Lcd_Custom_Chr(1,4,txt4[2]);
+ Lcd_Custom_Chr_Cp(txt4[3]);
+ Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+ if( kurs.F2 ==0){  kurs.F2 =1;
+ ShortToStr (n_year,txt4); if(txt4[2]==32){txt4[2]=48;}
+ Lcd_Custom_Chr(1,9,txt4[2]);
+ Lcd_Custom_Chr_Cp(txt4[3]);
+ Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+ if( kurs.F3 ==0){  kurs.F3 =1;
+ ShortToStr(n_hours,txt4);
+ Lcd_Custom_Chr(1,12,txt4[2]);
+ Lcd_Custom_Chr_Cp(txt4[3]);
+ Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+ if( kurs.F4 ==0){  kurs.F4 =1;
+ ShortToStr(n_minutes,txt4); if(txt4[2]==32){txt4[2]=48;}
+ Lcd_Custom_Chr(1,15,txt4[2]);
+ Lcd_Custom_Chr_Cp(txt4[3]);
+ Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+ if( kurs.F6 ==1){ kurs.F6 =0;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+ if(kp==5){n_date=date; n_month=month; n_year=year; n_hours=hours; n_minutes=minutes;page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+ if(kp==3){if (poz_kur<16){poz_kur++;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_RIGHT);push=0;}}
+ if(kp==4){if (poz_kur>1) {poz_kur--;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT); push=0;}}
+ if(kp==1){ switch(poz_kur){
+ case 1:
+ if (n_date<22){n_date+=10;push=0; kurs.F0 =0; kurs.F6 =1;}
+ break;
+ case 2:
+ if (n_date<31){n_date++;push=0; kurs.F0 =0;}
+ break;
+ case 4:
+ if (n_month<3){n_month+=10;push=0; kurs.F1 =0; kurs.F6 =1;}
+ break;
+ case 5:
+ if (n_month<12){n_month++;push=0; kurs.F1 =0;}
+ break;
+ case 9:
+ if (n_year<89){n_year+=10;push=0; kurs.F2 =0; kurs.F6 =1;}
+ break;
+ case 10:
+ if (n_year<99){n_year++;push=0; kurs.F2 =0;}
+ break;
+ case 12:
+ if (n_hours<14){n_hours+=10;push=0; kurs.F3 =0; kurs.F6 =1;}
+ break;
+ case 13:
+ if (n_hours<23){n_hours++;push=0; kurs.F3 =0;}
+ break;
+ case 15:
+ if (n_minutes<49){n_minutes+=10;push=0; kurs.F4 =0; kurs.F6 =1;}
+ break;
+ case 16:
+ if (n_minutes<59){n_minutes++;push=0; kurs.F4 =0;}
+ break;
+ push=0;}}
+ if(kp==2){ switch(poz_kur){
+ case 1:
+ if (n_date>10){n_date-=10;push=0; kurs.F0 =0; kurs.F6 =1;}
+ break;
+ case 2:
+ if (n_date>1){n_date--;push=0; kurs.F0 =0;}
+ break;
+ case 4:
+ if (n_month>10){n_month-=10;push=0; kurs.F1 =0; kurs.F6 =1;}
+ break;
+ case 5:
+ if (n_month>1){n_month--;push=0; kurs.F1 =0;}
+ break;
+ case 9:
+ if (n_year>10){n_year-=10;push=0; kurs.F2 =0; kurs.F6 =1;}
+ break;
+ case 10:
+ if (n_year>0){n_year--;push=0; kurs.F2 =0;}
+ break;
+ case 12:
+ if (n_hours>9){n_hours-=10;push=0; kurs.F3 =0; kurs.F6 =1;}
+ break;
+ case 13:
+ if (n_hours>0){n_hours--;push=0; kurs.F3 =0;}
+ break;
+ case 15:
+ if (n_minutes>9){n_minutes-=10;push=0; kurs.F4 =0; kurs.F6 =1;}
+ break;
+ case 16:
+ if (n_minutes>0){n_minutes--;push=0; kurs.F4 =0;}
+ break;
+ push=0;}}
+ if(kp==6){ds1307_init() ; day=1; seconds=0;
+ Delay_ms(100); ds1307_set_date_time();
+ push=0;}
+
+ break;
+
+ }
 kp=keypad();
 
 goto start;

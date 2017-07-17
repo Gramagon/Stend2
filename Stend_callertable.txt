@@ -1,23 +1,19 @@
 interrupt
-main
-	Mul_16x16_S
-	Div_32x32_FP
-		SETFUN32
-		SETFOV32
-		RES032
-		SETFDZ32
-	Mul_32x32_FP
-		SETFUN32
-		SETFOV32
-		RES032
-	Longword2Double
-		NRM4032
-			RES032
-			SETFOV32
+	Compare_Double
+	Int2Double
+		NRM3232
 			FIXSIGN32
 			SETFUN32
-	Div_32x32_U
+			RES032
+main
 	Compare_Double
+	Int2Double
+		NRM3232
+			FIXSIGN32
+			SETFUN32
+			RES032
+	Double2Word
+		SETIOV3224
 	Sub_32x32_FP
 		Add_32x32_FP
 			SETFOV32
@@ -26,6 +22,11 @@ main
 				SETFOV32
 				FIXSIGN32
 				SETFUN32
+	Div_32x32_FP
+		SETFUN32
+		SETFOV32
+		RES032
+		SETFDZ32
 	Add_32x32_FP
 		SETFOV32
 		NRM4032
@@ -33,8 +34,30 @@ main
 			SETFOV32
 			FIXSIGN32
 			SETFUN32
+	Mul_32x32_FP
+		SETFUN32
+		SETFOV32
+		RES032
+	Mul_16x16_U
 	I2C_Init
 	GlobalIniStend
+	keypad
+		Button
+			Delay_500us
+	ds1307_set_date_time
+		I2C_Stop
+		Dec2Bcd
+			Div_8x8_U
+		I2C_Wr
+		I2C_Start
+			I2C_Is_Idle
+	ds1307_init
+		I2C_Stop
+		Dec2Bcd
+			Div_8x8_U
+		I2C_Wr
+		I2C_Start
+			I2C_Is_Idle
 	sprintf
 		_doprntf
 			Double2Longint
@@ -90,13 +113,21 @@ main
 					RES032
 				Div_8x8_S
 			isdigit
-	LongToStr
-		Div_32x32_S
-			COMFREM
-			SDIV3232L
-	keypad
-		Button
-			Delay_500us
+	Lcd_Custom_Chr_CP
+		Lcd_Custom_Cmd
+			Delay_50us
+			Delay_5500us
+			Delay_1us
+	Lcd_Custom_Chr
+		Lcd_Custom_Cmd
+			Delay_50us
+			Delay_5500us
+			Delay_1us
+	ShortToStr
+		ByteToStr
+			Div_16x16_S
+				Div_16x16_S_L
+			Div_8x8_U
 	Lcd_Custom_Out
 		Lcd_Custom_Chr_CP
 			Lcd_Custom_Cmd

@@ -1,4 +1,4 @@
- // PIC18F6722
+        // PIC18F6722
  //начало проекта 09.2008. Проект разрабатывался в среде mikroC V8.1
 // Расширено до 30 типов сеялок, внесена версия программы в режиме отладки 
  //стенд проверки пультов АСКБ
@@ -7,33 +7,34 @@
         -Клавиатура PORTB
         -I2C        PORTC                                                      
 
-
-
   */
 const char cca_ver[]            = "Version  2.03   "; //Версия программы.
 const char cca_pus[]            = "                "; //пусто
 const char cca_tip[]            = "Tёѕ:";             //Тип:
 const char cca_rab[]            = "Pe¶ёј:";           //Режим:
-const char cca_std[]            = "CїeЅг ѕpoіepєё "; //Стенд проверки
-const char cca_prv[]            = "Ёy»Дїoі ACK v.1";//Пультов ACUB v.1
+const char cca_std[]            = "CїeЅг ѕpoіepєё ";  //Стенд проверки
+const char cca_prv[]            = "Ёy»Дїoі ACKBv.1";  //Пультов АСКВv.1
 const char cca_vkl[]            = "BK§ ";             //ВКЛ
 const char cca_vik[]            = "B®K§";             //ВЫКЛ
-const char cca_izd[]            = "B® OP TҐЁA";       //ВЫБОР ТИПА
+const char cca_izd[]            = "B® OP TҐЁA";       //В  ЫБОР ТИПА
 const char cca_imp[]            = "Ґјѕ";              //Введите импульсы
 const char cca_kmh[]            = "єј/А";             //км/ч
 const char cca_eeprom[]         = "EEPROM";           //
 const char cca_ga[]             = "Ўa ";              //Га
 const char cca_zgr[]            = "¤AЎP©¤KA";         //ЗАГРУЗКА
 const char cca_dnh[]            = "аAHH®X";           //ДАННЫХ
-const char cca_prb[]            = "         ";      //пусто     
-const char cca_prbb[]            = "     ";           //пусто
-const char cca_zb[]            = "Ko»-іo ·yІ.";       //Введите количество зубьев
-const char cca_zh[]            = "¬ёp. єo»eё";        //Введите  ширину колеи
-const char cca_dl[]            = "Oєp. єo»ec";        //Введите  окружность колеса
-
+const char cca_prb[]            = "         ";        //пусто
+const char cca_prbb[]           = "     ";            //пусто
+const char cca_zb[]             = "Ko»-іo ·yІ.";      //Введите количество зубьев
+const char cca_zh[]             = "¬ёp. ·axіaїa(M)";  //Введите  ширину захвата
+const char cca_dl[]             = "Oєp. єo»ec(M)";    //Введите  окружность колеса
+const char cca_imp1[]           = "Введите импульсы:";//Введите импульсы
+const char cca_skor[]           = "Skorost";          //Введите импульсы
+const char cca_Gc[]             = "km/ch";            //Введите импульсы
+const char cca_pustota[]         = "AЁЁ-3A-00";          //АПП-3A-01
 const char cca_tip1[]            = "AЁЁ-3A-00";          //АПП-3A-01
 const char cca_tip2[]            = "AЁЁ-3A-01";          //АПП-3A-02
-const char cca_tip3[]            = "AЁЁ-3A-02";          //АПП-3A-03      0
+const char cca_tip3[]            = "AЁЁ-3A-02";          //АПП-3A-03    
 const char cca_tip4[]            = "AЁЁ-3A-03";          //АПП-3A-04
 const char cca_tip5[]            = "AЁЁ-3A-04";          //АПП-3A-05
 const char cca_tip6[]            = "AЁЁ-3A-05";          //АПП-3A-06
@@ -47,7 +48,7 @@ const char cca_tip13[]           = "AЁЁ-4    ";          //АПП-4
 const char cca_tip14[]           = "AЁЁM-4   ";          //АППМ-4
 const char cca_tip15[]           = "CЁ©-4Mа  ";          //СПУ-4МД
 const char cca_tip16[]           = "AЁЁM-6   ";          //АППМ-6
-const char cca_tip17[]           = "AЁЁ6-A   ";          //АПП6-АБ
+const char cca_tip17[]           = "AЁЁ6-A   ";          //АПП6-АБ           т
 const char cca_tip18[]           = "CЁ©-6    ";          //СПУ-6
 const char cca_tip19[]           = "CЁM-6-06 ";          //СПМ-6-06
 const char cca_tip20[]           = "CЁM-6-07 ";          //СПМ-6-07
@@ -56,12 +57,13 @@ const char cca_tip22[]           = "CЁM-6-16 ";          //СПМ-6-16
 const char cca_tip23[]           = "C-6T     ";          //С-6Т
 const char cca_tip24[]           = "CKЁ12-K© ";          //СКП12-КУ
 const char cca_tip25[]           = "CЁ¬-9-00 ";          //CПШ-9-00
-const char cca_tip26[]           = "CЁ§-6    ";          // СПЛ-6
-const char cca_tip27[]           = "CЁ¬-9-01 ";          // СПШ-9-01
-const char cca_tip28[]           = "seylka28 ";          // резерв
-const char cca_tip29[]           = "seylka29 ";          // резерв
-const char cca_tip30[]           = "seylka30 ";          // резерв
-const char cca_tip31[]           = "PyАЅo№   ";           // Ручной ввод
+const char cca_tip26[]           = "CЁ§-6    ";          //СПЛ-6
+const char cca_tip27[]           = "CЁ¬-9-01 ";          //СПШ-9-01
+const char cca_tip28[]           = "seylka28 ";          //резерв
+const char cca_tip29[]           = "seylka29 ";          //резерв
+const char cca_tip30[]           = "seylka30 ";          //резерв
+const char cca_tip31[]           = "C3TM-4H";            //С3ТМ-4Н
+const char cca_e70[]            = "?§± ¤A?P.HA?M?";
 
   char txt_msg[16];
   char txt_msg1[16];
@@ -70,16 +72,21 @@ const char cca_tip31[]           = "PyАЅo№   ";           // Ручной ввод
   char txt4[4];
   char txt2[2];
   char txt1[1];
-  unsigned long  imp, frt=1, ch=1, cl=0, pl=0, zd=0, zb=0, Typ_izdelia=0;  //zb-число зубьеы. Остальные переменные для циклов
-  int rzrd1=0, rzrd2=0, rzrd3=0, rzrd4=0, rzrd5=0;      //Разряды чисел
-  double float ob=0, dl=0.1E+0, zh=0, nl=0.1E+0, ga=0;  //оборот колеса. длинна колеи. ширина колеи. гектары
+  unsigned long  Typ_izdelia=0;  //zb-число зубьеы. Остальные переменные для циклов
+  int i, nomer_seyalki=0, kp;      //Разряды чисел
+  int  imp_vent=0;                       //импульсы сеялок
+  unsigned float preddelitel, preddelitel_ob;
+  unsigned int preddelitel1, preddelitel_ob1;
+  double float impuls=0, impuls2=0, shirina=0,period,skorost=0,period2=0,okruzhnost=0,chastota=0,chastota_ob=0, zubia=0, Ob_vent=0, gektar=0;
+  double float  ga_avto=0.1E+0;   //оборот колеса. длинна колеи. ширина колеи. гектары
   char tip;
+  int sravnenie=0;
   unsigned short count_warn,warning;
-                 #define   warning_0      warning.F0
   unsigned int   adres_24C, adres_24C_rd, ch_im ;
-  unsigned short  page_save, old_alarm_0, old_alarm_1, old_alarm_2, old_alarm_3, ALARM__0, ALARM__1, ALARM__2;
- unsigned short push, old_0, old_1, old_2, old_3, old_4, old_5, old_6, old_7, old_8, jdem, jdem1, jdem2, jdem3;
- unsigned short flag_t, flag_ta, poz_kur=1, kurs;
+  unsigned short  page_save;
+  unsigned short push, old_0, old_1, old_2, old_3, old_4, old_5, old_6, old_7, old_8, jdem, jdem1, jdem2, jdem3;
+  unsigned short flag_t, flag_ta, poz_kur, kurs;
+  unsigned short  date, month, day, hours, minutes, seconds, year, prob,  n_date, n_month, n_year, n_hours, n_minutes;
                 #define d_kursor     kurs.F0
                 #define m_kursor     kurs.F1
                 #define y_kursor     kurs.F2
@@ -88,20 +95,13 @@ const char cca_tip31[]           = "PyАЅo№   ";           // Ручной ввод
                 #define o_kursor     kurs.F5
                 #define left_kursor  kurs.F6
 
- unsigned short temp_Per_CCP, Per_CCP1, Per_CCP2, Per_TMR1, flag, page, page_old, kp, B_visev_1, B_visev_2 ;
+ unsigned short temp_Per_CCP, Per_CCP1, Per_CCP2, Per_TMR1, flag, page, page_old,  B_visev_1, B_visev_2 ;
  unsigned int  old_CCP1, old_CCP2, temp_CCP, adc_rd;
  unsigned long rez_CCP1, rez_CCP2;
        #define visev_1        PORTF.F0
        #define visev_2        PORTF.F1
-       #define xod            PORTC.F1
        #define vent           PORTC.F2
-       #define marker         PORTF.F2
-       #define uroven_1       PORTF.F3
-       #define uroven_2       PORTF.F4
-       #define rezerv_1       PORTF.F5
-       #define rezerv_2       PORTF.F6
 
- unsigned short flag_bit0,flag_bit1,flag_bit2;
       #define Dvoetochie_onf flag_bit0.F0
       #define save_data      flag_bit0.F1
       #define Rab_reg_onf    flag_bit1.F0
@@ -150,9 +150,48 @@ void strcp_c(char *str1, const char *cstr2) {
   do {
     str1[i] = cstr2[i];
   } while (str1[i++]);}
+ typedef struct seialka {
+                char tip[10];
+                float impuls;
+                float zubia;
+                float shirina;
+                float okruzhnost;
+                float skorost;
+                float Ob_vent;
+                int  imp_vent;};
+struct seialka arr[31]={{"AЁЁ-3A-00",1820.0,12.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"AЁЁ-3A-01",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+                        {"AЁЁ-3A-02",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+                        {"AЁЁ-3A-03",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+                        {"AЁЁ-3A-04",1820.0,12.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"AЁЁ-3A-05",1820.0,12.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"CЁ©3-Aа  ",1820.0,12.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"CЁ©-3A-A6",1820.0,12.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"CЁ©-3A-A§",1820.0,12.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"CЁ©-3A-аK",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+                        {"CЁ©3A-а9K",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+                        {"CЁ©3A-A9K",1809.0,12.0,3.0,2.21056,30.0,3500.0, 2},
+                        {"AЁЁ-4    ",1357.0,12.0,4.0,2.21056,30.0,3500.0, 2},
+                        {"AЁЁM-4   ",1479.0,13.0,4.0,2.198,  30.0,3500.0, 2},
+                        {"CЁ©-4Mа  ",1357.0,12.0,4.0,2.21056,30.0,3500.0, 2},
+                        {"AЁЁM-6   ",1137.0,15.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"AЁЁ6-A   ",905.0 ,12.0,6.0,2.21056,30.0,3500.0, 2},
+                        {"CЁ©-6    ",905.0 ,12.0,6.0,2.21056,30.0,3500.0, 2},
+                        {"CЁM-6-06 ",1137.0,15.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"CЁM-6-07 ",1137.0,15.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"CЁM-6-12 ",1137.0,15.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"CЁM-6-16 ",1137.0,15.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"C-6T     ",521.0 ,8.0 ,8.4,2.5591, 30.0,3500.0, 2},
+                        {"CKЁ12-K© ",694.0 ,13.0,9.0,2.2294, 30.0,3500.0, 2},
+                        {"CЁ¬-9-00 ",657.0 ,13.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"CЁ§-6    ",1624.0,13.0,9.0,1.3345, 30.0,3500.0, 2},
+                        {"CЁ¬-9-01 ",657.0 ,13.0,9.0,2.198,  30.0,3500.0, 6},
+                        {"seylka28 ",657.0 ,13.0,6.0,2.198,  30.0,3500.0, 2},
+                        {"seylka29 ",1137.0,15.0,3.0,2.198,  30.0,3500.0, 2},
+                        {"seylka30 ",1479.0,13.0,4.0,2.198,  30.0,3500.0, 2},
+                        {"C3TM-4H  ",1750.0,14.0,4.0,2.000,  30.0,3500.0, 2}
+                        };
 //------------------------------------------------------------------------------
-
-                                
 short keypad (void){                                //Инициализация клавиатуры
   if (Button(&PORTB, 5, 1, 1)) {old_0 = 1;}
   if (old_0 && Button(&PORTB, 5, 1, 0)) {
@@ -174,7 +213,8 @@ short keypad (void){                                //Инициализация клавиатуры
   if (old_4 && Button(&PORTB, 2, 1, 0)) {
     push=5;
     old_4 = 0;   }
-  if (Button(&PORTB, 0, 1, 1)) {old_5 = 1;}
+  if (Button(&PORTB, 0, 1, 1)) {old_5 =
+   1;}
   if (old_5 && Button(&PORTB, 0, 1, 0)) {
     push=6;
     old_5 = 0;   }
@@ -183,271 +223,466 @@ short keypad (void){                                //Инициализация клавиатуры
 void stop (void){
 stop:
 if(PORTB.F0==0){INTCON=0b00000000; goto stop;}
-else{INTCON=0b11000000;}
-}
+else{INTCON=0b11100000;}
+}//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void DS1307_GetTime(void){
+   I2C_Start();
+   I2C_Wr(0xD0);
+   I2C_Wr(0);
+   I2C_Repeated_Start();
+   I2C_Wr(0xD1);
+   seconds = Bcd2Dec(I2C_Rd(1));
+   minutes = Bcd2Dec(I2C_Rd(1));
+   hours   = Bcd2Dec(I2C_Rd(1));
+   day     = Bcd2Dec(I2C_Rd(1));
+   date    = Bcd2Dec(I2C_Rd(1));
+   month   = Bcd2Dec(I2C_Rd(1));
+   year    = Bcd2Dec(I2C_Rd(0));
+   I2C_stop();
+}//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void ds1307_init(void){
+    int seconds=0;
+    seconds = (seconds & 0x7F);
+    Delay_ms(50);
+    I2C_Start();
+    I2C_Wr(0xD0);
+    I2C_Wr(0x00);
+    I2C_Wr(Dec2Bcd(seconds));
+    I2C_Stop();
+}//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void ds1307_set_date_time(void){
+    seconds =(seconds & 0x7F);
+    hours =(hours & 0x3F);
+    I2C_Start();
+    I2C_Wr(0xD0);
+    I2C_Wr(0x00);
+    I2C_Wr(Dec2Bcd(seconds));
+    I2C_Wr(Dec2Bcd(n_minutes));
+    I2C_Wr(Dec2Bcd(n_hours));
+    I2C_Wr(Dec2Bcd(day));
+    I2C_Wr(Dec2Bcd(n_date));
+    I2C_Wr(Dec2Bcd(n_month));
+    I2C_Wr(Dec2Bcd(n_year));
+    I2C_Wr(0x80);
+    I2C_Stop();
+}//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void DS1307_GetTime_hm(void){
+   I2C_Start();
+   I2C_Wr(0xD0);
+   I2C_Wr(0x01);
+   I2C_Repeated_Start();
+   I2C_Wr(0xD1);
+   minutes = Bcd2Dec(I2C_Rd(1));
+   hours   = Bcd2Dec(I2C_Rd(0));
+   I2C_stop();
+}//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  void interrupt(){
+  if(INTCON.TMR0IF) {
+     sravnenie++;
+     TMR0H = (preddelitel1>>8)& 0xFF;
+     TMR0L = preddelitel1 & 0xFF;
+     if(impuls2>=sravnenie){LATF.F0=~LATF.F0;}
+        else  INTCON=0b00000000;
+     INTCON.TMR0IF=0;
+    asm {  CLRWDT  }}
   if(PIR1.TMR1IF) {
-     PIR1.TMR1IF=0;
-    Per_TMR1++;
-    Per_CCP1++;
-    Per_CCP2++;
-    if(Per_CCP1>=3){rez_CCP1=100000;}
-    if(Per_CCP2>=4){rez_CCP2=300000;}
-    asm {  CLRWDT  }
-  }
-  if(PIR1.CCP1IF) {
-     PIR1.CCP1IF=0;
-    temp_Per_CCP=Per_CCP1;
-    Per_CCP1=0;
-    temp_CCP=CCPR1H; temp_CCP<<=8; temp_CCP+=CCPR1L;
-         if(temp_Per_CCP==0){rez_CCP1=temp_CCP-old_CCP1;}
-         if(temp_Per_CCP==1){rez_CCP1=0xFFFF-old_CCP1; rez_CCP1+=temp_CCP;}
-         if(temp_Per_CCP==2){rez_CCP1=0xFFFF-old_CCP1; rez_CCP1+=0xFFFF; rez_CCP1+=temp_CCP; }
-    old_CCP1=temp_CCP;
+    TMR1H = (preddelitel_ob1>>8)& 0xFF;
+    TMR1L = preddelitel_ob1 & 0xFF;;
+    LATF.F1=~LATF.F1;
+    PIR1.TMR1IF=0;
+     }
  }
-  if(PIR2.CCP2IF) {
-     PIR2.CCP2IF=0;
-     temp_Per_CCP=Per_CCP2;
-    Per_CCP2=0;
-    temp_CCP=CCPR2H; temp_CCP<<=8; temp_CCP+=CCPR2L;
-         if(temp_Per_CCP==0){rez_CCP2=temp_CCP-old_CCP2;}
-         if(temp_Per_CCP==1){rez_CCP2=0xFFFF-old_CCP2; rez_CCP2+=temp_CCP;}
-         if(temp_Per_CCP==2){rez_CCP2=0xFFFF-old_CCP2; rez_CCP2+=0xFFFF; rez_CCP2+=temp_CCP; }
-         if(temp_Per_CCP==3){rez_CCP2=0xFFFF-old_CCP2; rez_CCP2+=0x1FFFE; rez_CCP2+=temp_CCP; }
-    old_CCP2=temp_CCP;
- }
- }          
  void main()
   {
-   imp=0;
-   LVDCON=0b00011101;
+   LVDCON=0b00011101;               //Регистр управления модулем LVD
    Delay_ms(500);
-     
  MEMCON.EBDIS = 1;
- ADCON1=0x0E;
+ ADCON1=0x00001111;
  ADCON2=0xBA;
  TRISA=0xFF;
  TRISB=0xFF;
- TRISC=0b00011111;                  //                               
- TRISE=0b00000000;                  //   Инициализация портов вывода/записи
- TRISF=0b00000000;                  //                                                                                                                                                                           ;
-  PORTE.F0=0;
-  PORTE.F1=0;
-  PORTE.F2=1;
- ALARM__0=0; ALARM__1=0; ALARM__2=0;
- INTCON=0b00000000;
- PIE1=0; PIE2=0;
- PIR1=0; PIR2=0;
- CCP1CON=0; CCP2CON=0;
+ TRISC=0b00011010;            //
+ TRISE=0b0;                  // Инициализация портов вывода/записи
+ TRISF=0b11111100;
+ PORTE.F0=0;                       //
+ PORTE.F1=0;                       //  Pischalka
+ PORTE.F2=0;                       //
+
+ PIR2=0;
+ CCP1CON=0; CCP2CON=0;              // Регистры с управлюющими битами модулей    CCP
  CCP3CON=23;
  CCP1CON=0b00000101;
  CCP2CON=0b00000101;
- T1CON=0b00110001;
-
-   Lcd_Custom_Config(&PORTD,2,3,4,5,&PORTD,7,1,6);
-   Lcd_Custom_Cmd(Lcd_CURSOR_OFF);
-   I2C_Init(20000);
-   RCON.F7=1; IPR1.F3=1;
-   PIR2.LVDIF = 0;
-                    
-   INTCON=0b11000000;
-   PIE1=0b00000000;
-   PIE2=0b00000000;
-   WDTCON.F0=0;
+ T0CON=0b10000100;
+ T1CON=0b10101101;                  //Инициализация таймера
+ T2CON=0b01100010;
+ T3CON=0b01100010;
+ T4CON=0b01100010;
+ Lcd_Custom_Config(&PORTD,2,3,4,5,&PORTD,7,1,6);
+ Lcd_Custom_Cmd(Lcd_CURSOR_OFF);
+ I2C_Init(20000);
+ RCON.F7=1; IPR1.F3=1;
+ PIR2.LVDIF = 0;
+ INTCON=0b00000000;     // 0 бит -
+ PIE1=0b00000000;       // Регистры управления прерываниями
+ PIE2=0b00000000;       //
+ PIR1=0b00000000;
+ WDTCON.F0=0;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    page=1; page_save=1;
 start:
-
 //------------------------------------------------------------------------------
  switch(page){
       case 1:  //Страница 1:Вывод страртовой страницы и пожача звукового сигнала.
               strcp_c(txt_msg, cca_std); LCD_Custom_Out(1,2,txt_msg);
-              strcp_c(txt_msg, cca_prv); LCD_Custom_Out(2,2,txt_msg); 
+              strcp_c(txt_msg, cca_prv); LCD_Custom_Out(2,2,txt_msg);
               Delay_ms(500);
               PORTE.F1=1;
               Delay_ms(200);
               PORTE.F1=0;
               Lcd_Custom_Cmd(Lcd_Clear);
               page=2;push=0;
-        break; //---------------------------------------------------------------
-      case 2: //Страница 2:Выбор типа сеялки 
-                 strcp_c(txt_msg, cca_izd); LCD_Custom_Out(1,4,txt_msg);
-                 strcp_c(txt_msg, cca_tip); LCD_Custom_Out(2,1,txt_msg);
-                switch(Typ_izdelia){//Типы сеялок и их параметры
-                case 1:  strcp_c(txt_msg, cca_tip1);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 2:  strcp_c(txt_msg, cca_tip2);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791; break;
-                case 3:  strcp_c(txt_msg, cca_tip3);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791;break;
-                case 4:  strcp_c(txt_msg, cca_tip4);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791;break;
-                case 5:  strcp_c(txt_msg, cca_tip5);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 6:  strcp_c(txt_msg, cca_tip6);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 7:  strcp_c(txt_msg, cca_tip7);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 8:  strcp_c(txt_msg, cca_tip8);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 9:  strcp_c(txt_msg, cca_tip9);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 10: strcp_c(txt_msg, cca_tip10); LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1820; cl=1820; dl=2,198; zh=3; ob=151,653;break;
-                case 11:  strcp_c(txt_msg, cca_tip11);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791;break;
-                case 12:  strcp_c(txt_msg, cca_tip12);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1809; cl=1809; dl=2,21056; zh=3; ob=150,791; break;
-                case 13:  strcp_c(txt_msg, cca_tip13);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1357; cl=1357; dl=2,21056; zh=4; ob=113,1;break;
-                case 14:  strcp_c(txt_msg, cca_tip14);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1479; cl=1479; dl=2,198; zh=4; ob=113,74;break;
-                case 15:  strcp_c(txt_msg, cca_tip15);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=1357; cl=1357; dl=2,21056; zh=4; ob=113,1;break;
-                case 16:  strcp_c(txt_msg, cca_tip16);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
-                case 17:  strcp_c(txt_msg, cca_tip17);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=905; cl=905; dl=2,21056; zh=6; ob=75,3957;break;
-                case 18:  strcp_c(txt_msg, cca_tip18);  LCD_Custom_Out(2,6,txt_msg); zb=12; imp=905; cl=905; dl=2,198; zh=6; ob=75,3957;break;
-                case 19:  strcp_c(txt_msg, cca_tip19);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,21056; zh=6; ob=75,8265;break;
-                case 20:  strcp_c(txt_msg, cca_tip20); LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,21056; zh=6; ob=75,8265;break;
-                case 21:  strcp_c(txt_msg, cca_tip21);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
-                case 22:  strcp_c(txt_msg, cca_tip22);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
-                case 23:  strcp_c(txt_msg, cca_tip23);  LCD_Custom_Out(2,6,txt_msg); zb=8; imp=521; cl=521; dl=2,5591; zh=6; ob=65,1271;break;
-                case 24:  strcp_c(txt_msg, cca_tip24);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=694; cl=694; dl=2,2294; zh=8,4; ob=53,3989;break;
-                case 25:  strcp_c(txt_msg, cca_tip25);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
-                case 26:  strcp_c(txt_msg, cca_tip26);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1624; cl=1624; dl=1,3345; zh=6; ob=124,891;break;
-                case 27:  strcp_c(txt_msg, cca_tip27);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
-                case 28:  strcp_c(txt_msg, cca_tip28);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=657; cl=657; dl=2,198; zh=9; ob=50,551;break;
-                case 29:  strcp_c(txt_msg, cca_tip29);  LCD_Custom_Out(2,6,txt_msg); zb=15; imp=1137; cl=1137; dl=2,198; zh=6; ob=75,8265;break;
-                case 30:  strcp_c(txt_msg, cca_tip30);  LCD_Custom_Out(2,6,txt_msg); zb=13; imp=1479; cl=1479; dl=2,198; zh=4; ob=113,74;break;
-                case 31:  strcp_c(txt_msg, cca_tip31);  LCD_Custom_Out(2,6,txt_msg);  imp=0; break;
-                } 
-        keypad(); //Выбор контретной сеялки и загрузка данных
-              if(kp==3){Typ_izdelia +=1;push=0;page=2;} if(Typ_izdelia>31){Typ_izdelia=1;}
-              if(kp==4){Typ_izdelia -=1;push=0;page=2;} if(Typ_izdelia<1){Typ_izdelia=31;}    
-              if(kp==5){ if(Typ_izdelia==31){ Lcd_Custom_Cmd(Lcd_Clear);  
-                                              strcp_c(txt_msg, cca_zgr); LCD_Custom_Out(1,5,txt_msg);
-                                              strcp_c(txt_msg, cca_dnh); LCD_Custom_Out(2,6,txt_msg);
-                                              Delay_ms(1000);
-                                              Lcd_Custom_Cmd(Lcd_Clear);page=5;push=0;break;}
-                         Lcd_Custom_Cmd(Lcd_Clear);  
-                         strcp_c(txt_msg, cca_zgr); LCD_Custom_Out(1,5,txt_msg);
-                         strcp_c(txt_msg, cca_dnh); LCD_Custom_Out(2,6,txt_msg);
-                         Delay_ms(1000);
-                        Lcd_Custom_Cmd(Lcd_Clear);
-                        page=3;
-                        push=0;}              
        break; //---------------------------------------------------------------
-      case 3: //Страница 3: Выбор количества гектаров и сообветствующее им количество импульсов.
-                 strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,14,txt_msg);  
-                 strcp_c(txt_msg, cca_Ga); LCD_Custom_Out(2,14,txt_msg);               
-                 if (kp==3){nl+=0.1E+0;push=0;imp=imp+cl;frt=frt+1;//nl-гектары
-                            strcp_c(txt_msg, cca_prb); LCD_Custom_Out(1,1,txt_msg);
-                            strcp_c(txt_msg, cca_prb); LCD_Custom_Out(2,1,txt_msg);}  
-                 if (kp==4){nl-=0.1E+0;push=0;imp=imp-cl;frt=frt-1;//frt-значение необходимое по формуле 
-                            strcp_c(txt_msg, cca_prb); LCD_Custom_Out(1,1,txt_msg);
-                            strcp_c(txt_msg, cca_prb); LCD_Custom_Out(2,1,txt_msg);} 
-                            if(nl<0.1E+0){nl=0;imp=0;frt=frt;}
-                 LongToStr(imp,txt_msg); LCD_Custom_Out(1,1,txt_msg);           
-                 *txt_msg='\0';
-                 sprintf(txt_msg, "%3g", nl); LCD_Custom_Out(2,1,txt_msg);
-                 strcp_c(txt_msg, cca_prbb);LCD_Custom_Out(2,5,txt_msg);
-                 *txt_msg='\0';
-                 if (kp==5){nl==nl;imp==imp;page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
-                 if (kp==1){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
-                 if (kp==2){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;} 
+       case 2:  //Дата и время 2 страница
+              ShortToStr(hours,txt4);
+              Lcd_Custom_Chr(1,12,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+              ShortToStr(minutes,txt4);   if(txt4[2]==32){txt4[2]=48;}
+              Lcd_Custom_Chr(1,15,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+              ShortToStr(date,txt4);
+              Lcd_Custom_Chr(2,5,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+              ShortToStr(month,txt4);
+              Lcd_Custom_Chr(2,7,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+             ShortToStr(year,txt4);
+              Lcd_Custom_Chr(2,9,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+              if(kp==1){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==2){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){page=23;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+       break; //---------------------------------------------------------------
+       case 3: //Выбор режима
+              strcp_c(txt_msg, "Pe¶ёј:" ); LCD_Custom_Out(1,1,txt_msg);
+              strcp_c(txt_msg, "<-Aіїo.PyАЅo№->" ); LCD_Custom_Out(2,1,txt_msg);
+              if(kp==1){page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==2){page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==3){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
         break; //---------------------------------------------------------------
-      case 4: //Страница 4:Отправка импульсов и подсчет гектаров.
-                 strcp_c(txt_msg, cca_Ga); LCD_Custom_Out(1,14,txt_msg);
-                 strcp_c(txt_msg, cca_imp); LCD_Custom_Out(2,14,txt_msg);                 
-                 if(kp==5){Lcd_Custom_Cmd(Lcd_Clear);page=2;push=0;}
-                 while (ch<imp) 
-                        {
-                        kp=keypad();
-                        if (kp==5){kp=0;Delay_ms(20);while(kp!=5){kp=keypad();Delay_ms(10);}}
-                        if (kp==6){break;}
-                        ch=ch++;                        
-                        PORTF.F0=0; //Отпревка импульсов
-                        Delay_ms(9);
-                        PORTF.F0=1;
-                        Delay_ms(1);
-                        ga=((ch/zb)*dl*zh)/10000+0.01*frt;//Формулы вычисления количества гектаров.
-                        sprintf(txt_msg, "%3g", ga);
-                        LCD_Custom_Out(1,1,txt_msg);
-                        *txt_msg='\0';
-                        sprintf(txt_msg, "%5d", ch);
-                        LCD_Custom_Out(2,1,txt_msg);
-                        *txt_msg='\0';
-                        strcp_c(txt_msg, cca_prbb); LCD_Custom_Out(1,8,txt_msg);
-                        }
-                        stop1: 
-                        while (zd<=2) //Звуковой сигнал после окончания работы
-                                {
-                                zd=zd++;
-                                PORTE.F1=1;
-                                Delay_ms(200);
-                                PORTE.F1=0;
-                                Delay_ms(200);}
-                        imp=0, ch=1, zb=0, Typ_izdelia=1, nl=0.1;
-                        PORTF.F0=1; 
-                        PORTE.F1=0;                 
-        break; //---------------------------------------------------------------    
-        case 5://Страница 5(Ручная) Настройка числа импульсов 
-              keypad(); imp=0;
-              strcp_c(txt_msg, cca_imp); LCD_Custom_Out(1,1,txt_msg);
-              Lcd_Custom_Cmd(LCD_UNDERLINE_ON); //Подчеркивание курсора
-              if(kp==3){if(poz_kur<=5){poz_kur++;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_RIGHT);push=0;}}
-              if(kp==4){if(poz_kur>0){poz_kur--;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT); push=0;}}
-              if(kp==1){switch(poz_kur){
-                       case 1: //--------------------------------------
-                              if (rzrd5<=9){rzrd5++;push=0;if(rzrd5>9){rzrd5=0;}sprintf(txt1,"%u", rzrd5);LCD_Custom_Out(1,5,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 2: //--------------------------------------
-                              if (rzrd4<=9){rzrd4++;push=0;if(rzrd4>9){rzrd4=0;}sprintf(txt1,"%u", rzrd4);LCD_Custom_Out(1,6,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 3: //--------------------------------------
-                              if (rzrd3<=9){rzrd3++;push=0;if(rzrd3>9){rzrd3=0;}sprintf(txt1,"%u", rzrd3);LCD_Custom_Out(1,7,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 4: //--------------------------------------
-                              if (rzrd2<=9){rzrd2++;push=0;if(rzrd2>9){rzrd2=0;}sprintf(txt1,"%u", rzrd2);LCD_Custom_Out(1,8,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 5: //--------------------------------------
-                              if (rzrd1<=9){rzrd1++;push=0;if(rzrd1>9){rzrd1=0;}sprintf(txt1, "%u" , rzrd1);LCD_Custom_Out(1,9,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       push=0;}}       
-               if(kp==2){switch(poz_kur){
-                       case 1: //--------------------------------------
-                              if (rzrd5>=0){rzrd5--;push=0;if(rzrd5<0){rzrd5=9;}sprintf(txt1,"%u", rzrd5);LCD_Custom_Out(1,5,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 2: //--------------------------------------
-                              if (rzrd4>=0){rzrd4--;push=0;if(rzrd4<0){rzrd4=9;}sprintf(txt1,"%u", rzrd4);LCD_Custom_Out(1,6,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 3: //--------------------------------------
-                              if (rzrd3>=0){rzrd3--;push=0;if(rzrd3<0){rzrd3=9;}sprintf(txt1,"%u", rzrd3);LCD_Custom_Out(1,7,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 4: //--------------------------------------
-                              if (rzrd2>=0){rzrd2--;push=0;if(rzrd2<0){rzrd2=9;}sprintf(txt1,"%u", rzrd2);LCD_Custom_Out(1,8,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       case 5: //--------------------------------------
-                              if (rzrd1>=0){rzrd1--;push=0;if(rzrd1<0){rzrd1=9;}sprintf(txt1,"%u", rzrd1);LCD_Custom_Out(1,9,txt1);Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-                       break;//--------------------------------------
-                       push=0;}}
-              if(kp==5){imp=10000*rzrd5+1000*rzrd4+100*rzrd3+10*rzrd2+rzrd1;Lcd_Custom_Cmd(Lcd_Clear);page=6;push=0;} //Формула подсчета импульсов.     
-        break;
-        case 6://Страница6:(Ручная) Выбор числа зубьев
-              strcp_c(txt_msg, cca_zb); LCD_Custom_Out(1,1,txt_msg); 
-              keypad();
-              if(kp==3){zb +=1;push=0;Lcd_Custom_Cmd(Lcd_Clear);} 
-              if(kp==4){zb -=1;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
-              sprintf(txt_msg, "%7u", zb); LCD_Custom_Out(2,1,txt_msg);
-              *txt_msg='\0';     
-              if(kp==5){zb==zb;page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);} 
-        break;
-        case 7://Страница 7:(Ручная) Выбор ширины колеи
-              strcp_c(txt_msg, cca_zh); LCD_Custom_Out(1,1,txt_msg);
-              strcp_c(txt_msg,cca_prb); LCD_Custom_Out(2,4,txt_msg);   
-              keypad();
-              if(kp==3){zh +=0.5E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);} 
-              if(kp==4){zh -=0.5E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
-              sprintf(txt_msg, "%3g", zh); LCD_Custom_Out(2,1,txt_msg);
-              *txt_msg='\0';
-              if(kp==5){zh==zh;page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
-        break;
-        case 8: //Страница 8:(Ручная) Выбор длинны окружности колеса.
-              strcp_c(txt_msg, cca_dl); LCD_Custom_Out(1,1,txt_msg); 
-              keypad();
-              if(kp==3){dl +=0.1E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);} 
-              if(kp==4){dl -=0.1E+0;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
-              strcp_c(txt_msg,cca_prb); LCD_Custom_Out(2,4,txt_msg);
-              sprintf(txt_msg, "%3g", dl);LCD_Custom_Out(2,1,txt_msg);    
-              if(kp==5){dl==dl;page=4;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
-        break;
-}
+        case 4://Автоматический выбор сеялки
+              strcp_c(txt_msg, "B® OP TҐЁA" ); LCD_Custom_Out(1,3,txt_msg);
+              LCD_Custom_Out(2,1,arr[nomer_seyalki]. tip);
+              if(kp==1){nomer_seyalki++;push=0;if(nomer_seyalki>30){nomer_seyalki=0;}}
+              if(kp==2){nomer_seyalki--;push=0;if(nomer_seyalki<0){nomer_seyalki=30;}}
+              if(kp==3){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=13;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){
+                        impuls=arr[nomer_seyalki].impuls;
+                        impuls2=impuls*2+80;
+                        zubia=arr[nomer_seyalki].zubia;
+                        shirina=arr[nomer_seyalki].shirina;
+                        okruzhnost=arr[nomer_seyalki].okruzhnost;
+                        skorost=arr[nomer_seyalki].skorost;
+                        Ob_vent=arr[nomer_seyalki].Ob_vent;
+                        imp_vent=arr[nomer_seyalki].imp_vent;
+                        chastota=(skorost*1000/3600/okruzhnost*zubia);
+                        preddelitel=65539-((1/chastota)*2500000)/32;
+                        preddelitel1=(unsigned int) preddelitel;
+                        chastota_ob=(Ob_vent/60)*imp_vent;
+                        preddelitel_ob=65550-((1/chastota_ob)*2500000)/4;
+                        preddelitel_ob1=(unsigned int)preddelitel_ob;
+                        INTCON=0b11100000;
+                        PIE1=0b00000001;
+                        Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 5: //Параметры сеялки
+              strcp_c(txt_msg, "Ёapaј. ceЗ»єё" ); LCD_Custom_Out(1,1,txt_msg);
+              if(kp==3){page=12;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=4; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){page=6; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 6://Количество импульсов
+              strcp_c(txt_msg, "Ko»-іo ёјѕ.");  LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%5.0f", impuls);LCD_Custom_Out(2,1,txt_msg);
+              if(kp==3){page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=11;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 7: //Количество зубьев
+              strcp_c(txt_msg, "Ko»-іo ·yІДeі"); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%2.0f", zubia);  LCD_Custom_Out(2,1,txt_msg);
+              if(kp==3){page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 8: //Ширина захвата
+              strcp_c(txt_msg, "¬ёpёЅa ·axіaїa");   LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%1.1f", shirina);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+              if(kp==3){page=9;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=7;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 9://Окружность колесa
+              strcp_c(txt_msg, "Oєpy¶Ѕ. єo»eca" );     LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%1.2f", okruzhnost);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+              if(kp==3){page=10;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=8;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=5;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 10://Заданная скорость
+              strcp_c(txt_msg, "CєopocїД" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%2.0f", skorost);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "Kј/А" ); LCD_Custom_Out(2,5,txt_msg);
+              if(kp==3){page=11;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=9;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 11://Заданные обороты вентилятора.
+              strcp_c(txt_msg, "OІop. іeЅїё».1" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%5.0f", Ob_vent);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "OІ/јёЅ" );  LCD_Custom_Out(2,10,txt_msg);
+              if(kp==3){page=6;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=10;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 12://Количество ГА,скорость и количество импульсов.
+              strcp_c(txt_msg, "0.1" ); LCD_Custom_Out(1,1,txt_msg);
+              strcp_c(txt_msg, "Ўa" ); LCD_Custom_Out(1,5,txt_msg);
+              sprintf(txt_msg, "%2.0f", skorost);LCD_Custom_Out(1,8,txt_msg);;
+              strcp_c(txt_msg, "Kј/А" ); LCD_Custom_Out(1,11,txt_msg);
+              sprintf(txt_msg, "%5.0f", impuls);LCD_Custom_Out(2,7,txt_msg);;
+              strcp_c(txt_msg, "Ґјѕ" ); LCD_Custom_Out(2,12,txt_msg);
+              if(kp==3){page=13;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=5; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 13://Обороты вентилятора.
+              strcp_c(txt_msg, "OІop. іeЅїё».1" );LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%5.0f", Ob_vent);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "OІ/јёЅ" );  LCD_Custom_Out(2,10,txt_msg);
+              if(kp==3){page=4; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=12;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+        case 14://Ручная настройка параметров
+              sprintf(txt_msg, "%2.1f", gektar);LCD_Custom_Out(1,1,txt_msg);
+              strcp_c(txt_msg, "Ўa"); LCD_Custom_Out(1,5,txt_msg);
+              sprintf(txt_msg, "%2.1f", skorost);LCD_Custom_Out(1,7,txt_msg);
+              strcp_c(txt_msg, "Kј/А"); LCD_Custom_Out(1,11,txt_msg);
+              sprintf(txt_msg, "%5.0f", impuls);LCD_Custom_Out(2,1,txt_msg);;
+              strcp_c(txt_msg, "Ґјѕ."); LCD_Custom_Out(2,6,txt_msg);
+              if(kp==2){page=15;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==3){page=22;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=22;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){
+              impuls=(gektar*10000*zubia)/(shirina*okruzhnost);
+              impuls2=2*impuls+80;
+              chastota=(skorost*1000/3600/okruzhnost*zubia);
+              preddelitel=65539-((1/chastota)*2500000)/32;
+              preddelitel1=(unsigned int) preddelitel;
+              chastota_ob=(Ob_vent/60)*imp_vent;
+              preddelitel_ob=65550-((1/chastota_ob)*2500000)/4;
+              preddelitel_ob1=(unsigned int)preddelitel_ob;
+              INTCON=0b11100000;
+              PIE1=0b00000001;
+              }
+        break; //---------------------------------------------------------------
+        case 15://Shirina zahvata
+              strcp_c(txt_msg, "¬ёpёЅa ·axіaїa" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%2.1f", shirina);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+              if(kp==1){shirina=shirina+0.2;push=0;if(shirina>20.0){shirina=0;}}
+              if(kp==2){shirina=shirina-0.2;push=0;if(shirina<0){shirina=20.0;}}
+              if(kp==3){page=16;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=21;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){shirina==shirina;push=0;}
+        break; //---------------------------------------------------------------
+        case 16://Chislo zubiev kolesa
+              strcp_c(txt_msg, "Ko»-іo ·yІДeі" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%2.0f", zubia);  LCD_Custom_Out(2,1,txt_msg);
+              if(kp==1){zubia=zubia+1.0;push=0;if(zubia>20.0){zubia=0;}}
+              if(kp==2){zubia=zubia-1.0;push=0;if(zubia<0){zubia=20.0;}}
+              if(kp==3){page=17;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=15;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){zubia==zubia;push=0;}
+        break; //---------------------------------------------------------------
+        case 17://Okrushnost kolesa
+              strcp_c(txt_msg, "Oєpy¶Ѕ. єo»eca" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%1.1f", okruzhnost);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "M" ); LCD_Custom_Out(2,5,txt_msg);
+              if(kp==1){okruzhnost=okruzhnost+0.1;push=0;if(okruzhnost>3.5){okruzhnost=0;}}
+              if(kp==2){okruzhnost=okruzhnost-0.1;push=0;if(okruzhnost<0){okruzhnost=3.5;}}
+              if(kp==3){page=18;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=16;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){okruzhnost==okruzhnost;push=0;}
+        break; //---------------------------------------------------------------
+        case 18://Skorost
+              strcp_c(txt_msg, "CєopocїД" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%2.1f", skorost);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "Kј/А" ); LCD_Custom_Out(2,5,txt_msg);
+              if(kp==1){skorost=skorost+0.1;push=0;if(skorost>100.0){skorost=0;}}
+              if(kp==2){skorost=skorost-0.1;push=0;if(skorost<0){skorost=100.0;}}
+              if(kp==3){page=19;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=17;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){skorost==skorost;push=0;}
+        break; //---------------------------------------------------------------
+        case 19://Ob_vent
+              strcp_c(txt_msg, "OІop. іeЅїё».1" );LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%5.0f", Ob_vent);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "OІ/јёЅ" );  LCD_Custom_Out(2,10,txt_msg);
+              if(kp==1){Ob_vent=Ob_vent+100.0;push=0;if(Ob_vent>6000.0){Ob_vent=0;}}
+              if(kp==2){Ob_vent=Ob_vent-100.0;push=0;if(Ob_vent<0){Ob_vent=6000.0;}}
+              if(kp==3){page=20;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=18;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){Ob_vent==Ob_vent;push=0;}
+        break; //---------------------------------------------------------------
+       case 20://imp_vent
+              strcp_c(txt_msg, "Ґјѕ. іeЅїё».1" );LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%2d", imp_vent);LCD_Custom_Out(2,1,txt_msg);
+              if(kp==1){imp_vent=imp_vent+1;push=0;if(imp_vent>10){imp_vent=0;}}
+              if(kp==2){imp_vent=imp_vent-1;push=0;if(imp_vent<0){imp_vent=10;}}
+              if(kp==3){page=21;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=19;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){imp_vent==imp_vent;push=0;}
+        break; //---------------------------------------------------------------
+         case 21://Gektar
+              strcp_c(txt_msg, "Ko»-іo ґeєїapoі" ); LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%3.1f", gektar);LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "Ўa" ); LCD_Custom_Out(2,10,txt_msg);
+              if(kp==1){gektar=gektar+0.1;push=0;if(gektar>100.0){gektar=0;}}
+              if(kp==2){gektar=gektar-0.1;push=0;if(gektar<0){gektar=100.0;}}
+              if(kp==3){page=15;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=20;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==5){gektar==gektar;push=0;}
+        break; //---------------------------------------------------------------
+        case 22://oborot ventilatora
+              strcp_c(txt_msg, "OІop. іeЅїё».1" );  LCD_Custom_Out(1,1,txt_msg);
+              sprintf(txt_msg, "%5.0f", Ob_vent);  LCD_Custom_Out(2,1,txt_msg);
+              strcp_c(txt_msg, "OІ/јёЅ" );  LCD_Custom_Out(2,10,txt_msg);
+              if(kp==3){page=14; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==4){page=14;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+              if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+        break; //---------------------------------------------------------------
+        case 23://Часы
+               if(o_kursor==0){   o_kursor=1;
+                strcp_c(txt_msg, cca_e70); LCD_Custom_Out(2,1,txt_msg);
+                LCD_Custom_Chr(2,16,252);
+                Lcd_Custom_Out(1, 3, ".");
+                Lcd_Custom_Out(1, 6, ".");  Lcd_Custom_Chr_Cp('2'); Lcd_Custom_Chr_Cp('0');
+                Lcd_Custom_Out(1, 14, ":");   }
+               if(d_kursor==0){   d_kursor=1;
+                 ShortToStr(n_date,txt4);
+                    Lcd_Custom_Chr(1, 1, txt4[2]);
+                    Lcd_Custom_Chr_Cp(txt4[3]);
+                    Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+                if(m_kursor==0){   m_kursor=1;
+                 ShortToStr(n_month,txt4);  if(txt4[2]==32){txt4[2]=48;}
+                    Lcd_Custom_Chr(1,4,txt4[2]);
+                    Lcd_Custom_Chr_Cp(txt4[3]);
+                    Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+                if(y_kursor==0){   y_kursor=1;
+                 ShortToStr (n_year,txt4); if(txt4[2]==32){txt4[2]=48;}
+                    Lcd_Custom_Chr(1,9,txt4[2]);
+                    Lcd_Custom_Chr_Cp(txt4[3]);
+                    Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+                if(h_kursor==0){   h_kursor=1;
+                 ShortToStr(n_hours,txt4);
+                    Lcd_Custom_Chr(1,12,txt4[2]);
+                    Lcd_Custom_Chr_Cp(txt4[3]);
+                    Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+                if(mi_kursor==0){   mi_kursor=1;
+                 ShortToStr(n_minutes,txt4);   if(txt4[2]==32){txt4[2]=48;}
+                    Lcd_Custom_Chr(1,15,txt4[2]);
+                    Lcd_Custom_Chr_Cp(txt4[3]);
+                    Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+                if(left_kursor==1){left_kursor=0;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
+               if(kp==5){n_date=date; n_month=month; n_year=year; n_hours=hours; n_minutes=minutes;page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+               if(kp==3){if (poz_kur<16){poz_kur++;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_RIGHT);push=0;}}
+               if(kp==4){if (poz_kur>1) {poz_kur--;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT); push=0;}}
+               if(kp==1){ switch(poz_kur){
+                                case 1: //--------------------------------------
+                                        if (n_date<22){n_date+=10;push=0;d_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 2: //--------------------------------------
+                                        if (n_date<31){n_date++;push=0;d_kursor=0;}
+                                  break;//--------------------------------------
+                                case 4: //--------------------------------------
+                                        if (n_month<3){n_month+=10;push=0;m_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 5: //--------------------------------------
+                                        if (n_month<12){n_month++;push=0;m_kursor=0;}
+                                  break;//--------------------------------------
+                                case 9: //--------------------------------------
+                                        if (n_year<89){n_year+=10;push=0;y_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 10://--------------------------------------
+                                        if (n_year<99){n_year++;push=0;y_kursor=0;}
+                                  break;//--------------------------------------
+                                case 12://--------------------------------------
+                                        if (n_hours<14){n_hours+=10;push=0;h_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 13://--------------------------------------
+                                        if (n_hours<23){n_hours++;push=0;h_kursor=0;}
+                                  break;//--------------------------------------
+                                case 15://--------------------------------------
+                                        if (n_minutes<49){n_minutes+=10;push=0;mi_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 16://--------------------------------------
+                                        if (n_minutes<59){n_minutes++;push=0;mi_kursor=0;}
+                                  break;//--------------------------------------
+                                push=0;}}
+               if(kp==2){ switch(poz_kur){
+                                case 1: //--------------------------------------
+                                        if (n_date>10){n_date-=10;push=0;d_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 2: //--------------------------------------
+                                        if (n_date>1){n_date--;push=0;d_kursor=0;}
+                                  break;//--------------------------------------
+                                case 4: //--------------------------------------
+                                        if (n_month>10){n_month-=10;push=0;m_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 5: //--------------------------------------
+                                        if (n_month>1){n_month--;push=0;m_kursor=0;}
+                                  break;//--------------------------------------
+                                case 9: //--------------------------------------
+                                        if (n_year>10){n_year-=10;push=0;y_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 10://--------------------------------------
+                                        if (n_year>0){n_year--;push=0;y_kursor=0;}
+                                  break;//--------------------------------------
+                                case 12://--------------------------------------
+                                        if (n_hours>9){n_hours-=10;push=0;h_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 13://--------------------------------------
+                                        if (n_hours>0){n_hours--;push=0;h_kursor=0;}
+                                  break;//--------------------------------------
+                                case 15://--------------------------------------
+                                        if (n_minutes>9){n_minutes-=10;push=0;mi_kursor=0;left_kursor=1;}
+                                  break;//--------------------------------------
+                                case 16://--------------------------------------
+                                        if (n_minutes>0){n_minutes--;push=0;mi_kursor=0;}
+                                  break;//--------------------------------------
+                                push=0;}}
+              if(kp==6){ds1307_init() ;   day=1; seconds=0;
+                        Delay_ms(100); ds1307_set_date_time();
+                        push=0;}
+
+        break; //---------------------------------------------------------------
+
+        }
 kp=keypad();
 //------------------------------------------------------------------------------
 goto start;
