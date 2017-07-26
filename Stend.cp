@@ -66,7 +66,7 @@ const char cca_e70[] = "?§± ¤A?P.HA?M?";
  char txt1[1];
  unsigned long Typ_izdelia=0;
  int i, nomer_seyalki=0, kp;
- int imp_vent=0;
+ int marker, marker2, imp_vent=0;
  unsigned float preddelitel, preddelitel_ob;
  unsigned int preddelitel1, preddelitel_ob1;
  double float impuls=0, impuls2=0, shirina=0,period,skorost=0,period2=0,okruzhnost=0,chastota=0,chastota_ob=0, zubia=0, Ob_vent=0, gektar=0;
@@ -366,6 +366,8 @@ start:
  if(kp==5){
  impuls=arr[nomer_seyalki].impuls;
  impuls2=impuls*2+80;
+ marker=(impuls+80)/10;
+ marker2=(impuls+80)/10;
  zubia=arr[nomer_seyalki].zubia;
  shirina=arr[nomer_seyalki].shirina;
  okruzhnost=arr[nomer_seyalki].okruzhnost;
@@ -471,6 +473,8 @@ start:
  if(kp==5){
  impuls=(gektar*10000*zubia)/(shirina*okruzhnost);
  impuls2=2*impuls+80;
+ marker=(impuls+80)/10;
+ marker2=(impuls+80)/10;
  chastota=(skorost*1000/3600/okruzhnost*zubia);
  preddelitel=65539-((1/chastota)*2500000)/32;
  preddelitel1=(unsigned int) preddelitel;
@@ -667,9 +671,27 @@ start:
  if(kp==6) {ds1307_init() ; day=1; seconds=0;
  Delay_ms(100); ds1307_set_date_time();
  push=0;}
+ break;
+ case 24:
+ strcp_c(txt_msg, "Dlinna kolei" );LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2d", marker);LCD_Custom_Out(2,1,txt_msg);
+ if(kp==1){marker=marker+marker2;push=0;}
+ if(kp==2){marker=marker-marker2;push=0;}
+
+
+
+ if(kp==5){imp_vent==imp_vent;push=0;}
+ break;
+ case 25:
+ strcp_c(txt_msg, "¥¼¾. ³e½¿¸».1" );LCD_Custom_Out(1,1,txt_msg);
+ sprintf(txt_msg, "%2d", imp_vent);LCD_Custom_Out(2,1,txt_msg);
+ if(kp==1){marker=marker+100;push=0;}
+ if(kp==2){marker=marker-100;push=0;}
+
+
+
 
  break;
-
  }
 kp=keypad();
 
