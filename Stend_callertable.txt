@@ -58,6 +58,11 @@ main
 		I2C_Wr
 		I2C_Start
 			I2C_Is_Idle
+	Lcd_Custom_Chr_CP
+		Lcd_Custom_Cmd
+			Delay_50us
+			Delay_5500us
+			Delay_1us
 	sprintf
 		_doprntf
 			Double2Longint
@@ -113,11 +118,6 @@ main
 					RES032
 				Div_8x8_S
 			isdigit
-	Lcd_Custom_Chr_CP
-		Lcd_Custom_Cmd
-			Delay_50us
-			Delay_5500us
-			Delay_1us
 	Lcd_Custom_Chr
 		Lcd_Custom_Cmd
 			Delay_50us
@@ -128,6 +128,14 @@ main
 			Div_16x16_S
 				Div_16x16_S_L
 			Div_8x8_U
+	DS1307_GetTime
+		I2C_Stop
+		I2C_Rd
+		Bcd2Dec
+		I2C_Repeated_Start
+		I2C_Wr
+		I2C_Start
+			I2C_Is_Idle
 	Lcd_Custom_Out
 		Lcd_Custom_Chr_CP
 			Lcd_Custom_Cmd

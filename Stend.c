@@ -16,7 +16,7 @@ const char cca_std[]            = "C¿e½ã ¾po³epº¸ ";  //Ñòåíä ïðîâåðêè
 const char cca_prv[]            = "¨y»Ä¿o³ ACKBv.1";  //Ïóëüòîâ ÀÑÊÂv.1
 const char cca_vkl[]            = "BK§ ";             //ÂÊË
 const char cca_vik[]            = "B®K§";             //ÂÛÊË
-const char cca_izd[]            = "B® OP T¥¨A";       //Â  ÛÁÎÐ ÒÈÏÀ
+const char cca_izd[]            = "B® OP T¥¨A";       //ÂÛÁÎÐ ÒÈÏÀ
 const char cca_imp[]            = "¥¼¾";              //Ââåäèòå èìïóëüñû
 const char cca_kmh[]            = "º¼/À";             //êì/÷
 const char cca_eeprom[]         = "EEPROM";           //
@@ -48,7 +48,7 @@ const char cca_tip13[]           = "A¨¨-4    ";          //ÀÏÏ-4
 const char cca_tip14[]           = "A¨¨M-4   ";          //ÀÏÏÌ-4
 const char cca_tip15[]           = "C¨©-4Mà  ";          //ÑÏÓ-4ÌÄ
 const char cca_tip16[]           = "A¨¨M-6   ";          //ÀÏÏÌ-6
-const char cca_tip17[]           = "A¨¨6-A   ";          //ÀÏÏ6-ÀÁ           ò
+const char cca_tip17[]           = "A¨¨6-A   ";          //ÀÏÏ6-ÀÁ
 const char cca_tip18[]           = "C¨©-6    ";          //ÑÏÓ-6
 const char cca_tip19[]           = "C¨M-6-06 ";          //ÑÏÌ-6-06
 const char cca_tip20[]           = "C¨M-6-07 ";          //ÑÏÌ-6-07
@@ -324,13 +324,15 @@ void DS1307_GetTime_hm(void){
  I2C_Init(20000);
  RCON.F7=1; IPR1.F3=1;
  PIR2.LVDIF = 0;
- INTCON=0b00000000;     // 0 áèò -
+// INTCON=0b00000000;     // 0 áèò -
  PIE1=0b00000000;       // Ðåãèñòðû óïðàâëåíèÿ ïðåðûâàíèÿìè
  PIE2=0b00000000;       //
  PIR1=0b00000000;
  WDTCON.F0=0;
+ INTCON=0b11000000;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    page=1; page_save=1;
+
 start:
 //------------------------------------------------------------------------------
  switch(page){
@@ -345,16 +347,29 @@ start:
               page=2;push=0;
        break; //---------------------------------------------------------------
        case 2:  //Äàòà è âðåìÿ 2 ñòðàíèöà
-              ShortToStr(hours,txt4);
-              Lcd_Custom_Chr(1,12,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
-              ShortToStr(minutes,txt4);   if(txt4[2]==32){txt4[2]=48;}
-              Lcd_Custom_Chr(1,15,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
-              ShortToStr(date,txt4);
-              Lcd_Custom_Chr(2,5,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
-              ShortToStr(month,txt4);
-              Lcd_Custom_Chr(2,7,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
-             ShortToStr(year,txt4);
-              Lcd_Custom_Chr(2,9,txt4[2]); Lcd_Custom_Chr_Cp(txt4[3]);
+             DS1307_GetTime();
+             strcp_c(txt_msg, "Vremia:" ); LCD_Custom_Out(1,1,txt_msg);
+             strcp_c(txt_msg, "Data:" ); LCD_Custom_Out(2,1,txt_msg);
+             ShortToStr(hours,txt5);
+             LCD_Custom_Chr(1,11,txt5[2]);
+             Lcd_Custom_Chr(1,12,txt5[3]);
+             Lcd_Custom_Chr(1, 13, ':');
+             ShortToStr(minutes,txt5);   if(txt5[2]==32){txt5[2]=48;}
+             Lcd_Custom_Chr(1,14,txt5[2]);
+             Lcd_Custom_Chr(1,15,txt5[3]);
+             ShortToStr(date,txt5); if(txt5[2]==32){txt5[2]=48;}
+             Lcd_Custom_Chr(2,6,txt5[2]);
+             Lcd_Custom_Chr(2,7,txt5[3]);
+             Lcd_Custom_Chr(2, 8, '.');
+             ShortToStr(month,txt5); if(txt5[2]==32){txt5[2]=48;}
+             Lcd_Custom_Chr(2,9,txt5[2]);
+             Lcd_Custom_Chr(2,10,txt5[3]);
+             Lcd_Custom_Chr(2, 11, '.');
+             Lcd_Custom_Chr(2, 12, '2');
+             Lcd_Custom_Chr(2, 13, '0');
+             ShortToStr(year,txt5); if(txt5[2]==32){txt5[2]=48;}
+             Lcd_Custom_Chr(2,14,txt5[2]);
+             Lcd_Custom_Chr(2,15,txt5[3]);
               if(kp==1){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
               if(kp==2){page=3;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
               if(kp==5){page=23;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
@@ -577,39 +592,39 @@ start:
               if(kp==6){page=3; push=0;Lcd_Custom_Cmd(Lcd_Clear);}
         break; //---------------------------------------------------------------
         case 23://×àñû
-               if(o_kursor==0){   o_kursor=1;
+               if(o_kursor==0) {   o_kursor=1;
                 strcp_c(txt_msg, cca_e70); LCD_Custom_Out(2,1,txt_msg);
                 LCD_Custom_Chr(2,16,252);
                 Lcd_Custom_Out(1, 3, ".");
                 Lcd_Custom_Out(1, 6, ".");  Lcd_Custom_Chr_Cp('2'); Lcd_Custom_Chr_Cp('0');
                 Lcd_Custom_Out(1, 14, ":");   }
                if(d_kursor==0){   d_kursor=1;
-                 ShortToStr(n_date,txt4);
-                    Lcd_Custom_Chr(1, 1, txt4[2]);
-                    Lcd_Custom_Chr_Cp(txt4[3]);
+                 ShortToStr(n_date,txt5);
+                    Lcd_Custom_Chr(1, 1, txt5[2]);
+                    Lcd_Custom_Chr_Cp(txt5[3]);
                     Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
                 if(m_kursor==0){   m_kursor=1;
-                 ShortToStr(n_month,txt4);  if(txt4[2]==32){txt4[2]=48;}
-                    Lcd_Custom_Chr(1,4,txt4[2]);
-                    Lcd_Custom_Chr_Cp(txt4[3]);
+                 ShortToStr(n_month,txt5);  if(txt5[2]==32){txt5[2]=48;}
+                    Lcd_Custom_Chr(1,4,txt5[2]);
+                    Lcd_Custom_Chr_Cp(txt5[3]);
                     Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
                 if(y_kursor==0){   y_kursor=1;
-                 ShortToStr (n_year,txt4); if(txt4[2]==32){txt4[2]=48;}
-                    Lcd_Custom_Chr(1,9,txt4[2]);
-                    Lcd_Custom_Chr_Cp(txt4[3]);
+                 ShortToStr (n_year,txt5); if(txt5[2]==32){txt5[2]=48;}
+                    Lcd_Custom_Chr(1,9,txt5[2]);
+                    Lcd_Custom_Chr_Cp(txt5[3]);
                     Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
                 if(h_kursor==0){   h_kursor=1;
-                 ShortToStr(n_hours,txt4);
-                    Lcd_Custom_Chr(1,12,txt4[2]);
-                    Lcd_Custom_Chr_Cp(txt4[3]);
+                 ShortToStr(n_hours,txt5);
+                    Lcd_Custom_Chr(1,12,txt5[2]);
+                    Lcd_Custom_Chr_Cp(txt5[3]);
                     Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
                 if(mi_kursor==0){   mi_kursor=1;
-                 ShortToStr(n_minutes,txt4);   if(txt4[2]==32){txt4[2]=48;}
-                    Lcd_Custom_Chr(1,15,txt4[2]);
-                    Lcd_Custom_Chr_Cp(txt4[3]);
+                 ShortToStr(n_minutes,txt5);   if(txt5[2]==32){txt5[2]=48;}
+                    Lcd_Custom_Chr(1,15,txt5[2]);
+                    Lcd_Custom_Chr_Cp(txt5[3]);
                     Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
                 if(left_kursor==1){left_kursor=0;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT);}
-               if(kp==5){n_date=date; n_month=month; n_year=year; n_hours=hours; n_minutes=minutes;page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
+               if(kp==5){page=2;push=0;Lcd_Custom_Cmd(Lcd_Clear);}
                if(kp==3){if (poz_kur<16){poz_kur++;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_RIGHT);push=0;}}
                if(kp==4){if (poz_kur>1) {poz_kur--;Lcd_Custom_Cmd(LCD_MOVE_CURSOR_LEFT); push=0;}}
                if(kp==1){ switch(poz_kur){
@@ -676,7 +691,7 @@ start:
                                         if (n_minutes>0){n_minutes--;push=0;mi_kursor=0;}
                                   break;//--------------------------------------
                                 push=0;}}
-              if(kp==6){ds1307_init() ;   day=1; seconds=0;
+              if(kp==6) {ds1307_init() ;   day=1; seconds=0;
                         Delay_ms(100); ds1307_set_date_time();
                         push=0;}
 
